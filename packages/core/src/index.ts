@@ -20,7 +20,7 @@ export default (componentAst: Component): t.VariableDeclaration =>
 const compileChildren = (childrenAst: Child[]): t.ReturnStatement =>
   t.returnStatement(t.jsxFragment(t.jsxOpeningFragment(), t.jsxClosingFragment(), childrenAst.map(compileChild)))
 
-const compileChild = (childAst: Child): t.JSXElement | t.JSXText => {
+const compileChild = (childAst: Child): t.JSXElement | t.JSXText | t.JSXExpressionContainer => {
   switch (childAst.type) {
     case 'node':
       const selfClosingTag = childAst.children.length === 0
@@ -33,8 +33,7 @@ const compileChild = (childAst: Child): t.JSXElement | t.JSXText => {
       )
 
     default:
-      console.warn('🙈 child captured by default case', childAst)
-      return t.jsxText('')
+      return t.jsxExpressionContainer(compileExpression(childAst))
   }
 }
 

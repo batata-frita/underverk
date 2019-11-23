@@ -1,8 +1,10 @@
-import { Project, Component } from '../types'
+import { Project, Component } from '../../src/types'
 
-const Button: Component = {
+export const Button: Component = {
   name: 'Button',
   props: [{ name: 'onClick' }],
+  states: [],
+  effects: [],
   declarations: [
     {
       name: 'label',
