@@ -1,4 +1,4 @@
-import { Project, Component } from './types'
+import { Project, Component } from '../types'
 
 const Button: Component = {
   name: 'Button',
