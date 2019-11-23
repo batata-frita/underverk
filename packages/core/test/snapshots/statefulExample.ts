@@ -67,6 +67,7 @@ export default {
                     arguments: [
                       {
                         type: 'ArrowFunctionExpression',
+                        async: false,
                         params: [
                           {
                             type: 'Identifier',
