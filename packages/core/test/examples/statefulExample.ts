@@ -1,6 +1,6 @@
-import { Project, Component } from '../types'
+import { Project, Component } from '../../src/types'
 
-const Input: Component = {
+export const Input: Component = {
   name: 'Input',
   props: [],
   states: [
