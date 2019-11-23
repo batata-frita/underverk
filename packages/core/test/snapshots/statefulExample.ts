@@ -114,6 +114,10 @@ export default {
                           ],
                         },
                       },
+                      {
+                        elements: [],
+                        type: 'ArrayExpression',
+                      },
                     ],
                   },
                 },

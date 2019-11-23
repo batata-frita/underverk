@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`statefulExample generates 1`] = `
+"const Input = () => {
+  const [value, setValue] = state(\\"\\");
+  const handleChange = callback(event => setValue(get(\\"value\\", get(\\"target\\", event))), []);
+  effect(() => {
+    log(value);
+  }, [value]);
+  return <><input onChange={handleChange} value={value} /></>;
+};"
+`;
+
+exports[`staticExample generates 1`] = `
+"const Button = () => {
+  const label = concat(\\"Hello\\", \\"World\\");
+  return <><div>{label}</div></>;
+};"
+`;

@@ -1,7 +1,10 @@
 import * as t from '@babel/types'
+import babelGenerate from '@babel/generator'
 import { Component, State, Expression, Declaration, Effect, Child } from './types'
 
-export default (componentAst: Component): t.VariableDeclaration =>
+export const generate = (ast: t.VariableDeclaration): string => babelGenerate(ast).code
+
+export const compile = (componentAst: Component): t.VariableDeclaration =>
   t.variableDeclaration('const', [
     t.variableDeclarator(
       t.identifier(componentAst.name),
@@ -71,6 +74,8 @@ const compileExpression = (expressionAst: Expression): t.Expression => {
           expressionAst.arguments.map(argument => t.identifier(argument.name)),
           compileExpression(expressionAst.body),
         ),
+        // TODO: resolve the dependencies here
+        t.arrayExpression([]),
       ])
 
     case 'operation':
