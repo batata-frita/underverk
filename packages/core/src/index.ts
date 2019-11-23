@@ -1,5 +1,5 @@
 import * as t from '@babel/types'
-import { Component, State, Expression, Declaration } from './types'
+import { Component, State, Expression, Declaration, Effect } from './types'
 
 export default (componentAst: Component): t.VariableDeclaration =>
   t.variableDeclaration('const', [
@@ -10,10 +10,26 @@ export default (componentAst: Component): t.VariableDeclaration =>
         t.blockStatement([
           ...componentAst.states.map(compileState),
           ...componentAst.declarations.map(compileDeclaration),
+          ...componentAst.effects.map(compileEffect),
         ]),
       ),
     ),
   ])
+
+const compileEffect = (effectAst: Effect): t.ExpressionStatement =>
+  t.expressionStatement(
+    t.callExpression(t.identifier('effect'), [
+      t.arrowFunctionExpression(
+        [],
+        t.blockStatement([
+          t.expressionStatement(
+            t.callExpression(t.identifier(effectAst.type), effectAst.arguments.map(compileExpression)),
+          ),
+        ]),
+      ),
+      t.arrayExpression(effectAst.dependencies.map(dependency => t.identifier(dependency))),
+    ]),
+  )
 
 const compileDeclaration = (declarationAst: Declaration): t.VariableDeclaration =>
   t.variableDeclaration('const', [

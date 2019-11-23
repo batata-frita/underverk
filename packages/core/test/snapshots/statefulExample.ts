@@ -131,6 +131,7 @@ export default {
                 arguments: [
                   {
                     type: 'ArrowFunctionExpression',
+                    async: false,
                     params: [],
                     body: {
                       type: 'BlockStatement',
