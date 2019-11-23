@@ -55,7 +55,7 @@ export const Input: Component = {
   children: [
     {
       type: 'node',
-      element: { type: 'literal', value: 'input' },
+      element: 'input',
       props: [
         { name: 'onChange', value: { type: 'reference', value: 'handleChange' } },
         { name: 'value', value: { type: 'reference', value: 'value' } },

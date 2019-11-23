@@ -19,7 +19,7 @@ const Button: Component = {
   children: [
     {
       type: 'node',
-      element: { type: 'literal', value: 'div' },
+      element: 'div',
       props: [],
       children: [{ type: 'reference', value: 'label' }],
     },

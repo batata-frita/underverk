@@ -180,10 +180,7 @@ export default {
                 },
                 children: [
                   {
-                    type: 'JSXText',
-                    value: '\n    \t',
-                  },
-                  {
+                    selfClosing: true,
                     type: 'JSXElement',
                     openingElement: {
                       type: 'JSXOpeningElement',
@@ -225,10 +222,6 @@ export default {
                     },
                     closingElement: null,
                     children: [],
-                  },
-                  {
-                    type: 'JSXText',
-                    value: '\n    ',
                   },
                 ],
               },

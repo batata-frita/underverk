@@ -1,5 +1,5 @@
 import * as t from '@babel/types'
-import { Component, State, Expression, Declaration, Effect } from './types'
+import { Component, State, Expression, Declaration, Effect, Child } from './types'
 
 export default (componentAst: Component): t.VariableDeclaration =>
   t.variableDeclaration('const', [
@@ -11,10 +11,35 @@ export default (componentAst: Component): t.VariableDeclaration =>
           ...componentAst.states.map(compileState),
           ...componentAst.declarations.map(compileDeclaration),
           ...componentAst.effects.map(compileEffect),
+          compileChildren(componentAst.children),
         ]),
       ),
     ),
   ])
+
+const compileChildren = (childrenAst: Child[]): t.ReturnStatement =>
+  t.returnStatement(t.jsxFragment(t.jsxOpeningFragment(), t.jsxClosingFragment(), childrenAst.map(compileChild)))
+
+const compileChild = (childAst: Child): t.JSXElement | t.JSXText => {
+  switch (childAst.type) {
+    case 'node':
+      const selfClosingTag = childAst.children.length === 0
+
+      return t.jsxElement(
+        t.jsxOpeningElement(t.jsxIdentifier(childAst.element), childAst.props.map(compileProp), selfClosingTag),
+        selfClosingTag ? undefined : t.jsxClosingElement(t.jsxIdentifier(childAst.element)),
+        childAst.children.map(compileChild),
+        selfClosingTag,
+      )
+
+    default:
+      console.warn('🙈 child captured by default case', childAst)
+      return t.jsxText('')
+  }
+}
+
+const compileProp = (propAst: Declaration): t.JSXAttribute =>
+  t.jsxAttribute(t.jsxIdentifier(propAst.name), t.jsxExpressionContainer(compileExpression(propAst.value)))
 
 const compileEffect = (effectAst: Effect): t.ExpressionStatement =>
   t.expressionStatement(

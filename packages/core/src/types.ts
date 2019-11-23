@@ -33,12 +33,12 @@ export interface Declaration {
 
 export interface NodeChild {
   type: 'node'
-  element: Expression
+  element: string
   props: Declaration[]
   children: Child[]
 }
 
-type Child = NodeChild | Expression
+export type Child = NodeChild | Expression
 
 export interface State {
   name: string
