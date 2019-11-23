@@ -1,9 +1,9 @@
 import React from 'react'
 import { Input } from './statefulExample'
+import Overview from './components/Overview'
 
 const App: React.FC = () => {
-  console.log('Input', Input)
-  return <div></div>
+  return <Overview data={Input} />
 }
 
 export default App
