@@ -1,8 +1,7 @@
 {
-  "name": "core",
-  "version": "0.1.0",
+  "name": "@underverk/core",
+  "version": "1.0.0",
   "license": "MIT",
-  "author": "Paulo Ragonha",
   "main": "dist/index.js",
   "module": "dist/core.esm.js",
   "typings": "dist/index.d.ts",

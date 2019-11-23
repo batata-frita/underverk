@@ -1,8 +1,7 @@
 {
-  "name": "nko2019-batata-frita",
   "private": true,
   "workspaces": [
-    "packages/**"
+    "packages/*"
   ],
   "devDependencies": {
     "prettier": "1.19.1"
