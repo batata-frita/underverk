@@ -14,9 +14,15 @@ export interface Operation {
   arguments: Expression[]
 }
 
-export type Expression = Operation | Literal | Reference
+export interface Function {
+  type: 'function'
+  arguments: Argument[]
+  body: Expression
+}
 
-export interface PropType {
+export type Expression = Operation | Literal | Reference | Function
+
+export interface Argument {
   name: string
 }
 
@@ -34,10 +40,24 @@ export interface NodeChild {
 
 type Child = NodeChild | Expression
 
+export interface State {
+  name: string
+  updateFunction: string
+  defaultValue: Expression
+}
+
+export interface Effect {
+  type: 'log'
+  dependencies: string[]
+  arguments: Expression[]
+}
+
 export interface Component {
   name: string
-  props: PropType[]
+  props: Argument[]
   children: Child[]
+  states: State[]
+  effects: Effect[]
   declarations: Declaration[]
 }
 
