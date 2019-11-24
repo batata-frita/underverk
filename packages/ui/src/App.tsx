@@ -37,13 +37,20 @@ eval('window.' + appCode.slice(6))
 const NotApp: React.FC = () => (
   <pre>
     <App />
+
+    {AppSource.functions.map(f => (
+      <div style={{ width: 1024, height: 600, backgroundColor: '#FFFFF0' }}>
+        <FunctionView data={f} />
+      </div>
+    ))}
     <ComponentPane name={AppSource.name}>
-      <FunctionView />
       <ChildrenTree data={AppSource.children} />
     </ComponentPane>
+
     <ComponentPane name={TodoItemSource.name}>
       <ChildrenTree data={TodoItemSource.children} />
     </ComponentPane>
+
     <ComponentPane name={CheckmarkSource.name}>
       <ChildrenTree data={CheckmarkSource.children} />
     </ComponentPane>
