@@ -8,6 +8,7 @@ import { compile, generate } from '@underverk/compiler'
 import * as underverk from '@underverk/prelude'
 import ComponentPane from './components/ComponentPane'
 import ChildrenTree from './components/ChildrenTree'
+import FunctionView from './components/FuncionView'
 
 // import Overview from './components/Overview'
 
@@ -37,6 +38,7 @@ const NotApp: React.FC = () => (
   <pre>
     <App />
     <ComponentPane name={AppSource.name}>
+      <FunctionView />
       <ChildrenTree data={AppSource.children} />
     </ComponentPane>
     <ComponentPane name={TodoItemSource.name}>
