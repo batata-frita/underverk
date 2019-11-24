@@ -6,6 +6,7 @@ import plugin from '@babel/plugin-transform-react-jsx'
 import { App as AppSource, TodoItem as TodoItemSource, Checkmark as CheckmarkSource } from './todoExample'
 import { compile, generate } from '@underverk/compiler'
 import * as underverk from '@underverk/prelude'
+import ComponentPane from './components/ComponentPane'
 import ChildrenTree from './components/ChildrenTree'
 
 // import Overview from './components/Overview'
@@ -35,9 +36,15 @@ eval('window.' + appCode.slice(6))
 const NotApp: React.FC = () => (
   <pre>
     <App />
-    <ChildrenTree data={AppSource.children} />
-    <ChildrenTree data={TodoItemSource.children} />
-    <ChildrenTree data={CheckmarkSource.children} />
+    <ComponentPane name={AppSource.name}>
+      <ChildrenTree data={AppSource.children} />
+    </ComponentPane>
+    <ComponentPane name={TodoItemSource.name}>
+      <ChildrenTree data={TodoItemSource.children} />
+    </ComponentPane>
+    <ComponentPane name={CheckmarkSource.name}>
+      <ChildrenTree data={CheckmarkSource.children} />
+    </ComponentPane>
   </pre>
 )
 

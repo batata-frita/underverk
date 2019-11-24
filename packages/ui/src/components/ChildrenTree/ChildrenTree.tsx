@@ -1,5 +1,5 @@
 import React from 'react'
-import { Child, StaticNodeChild, Reference, DynamicNodeChild } from '@underverk/compiler'
+import { Child, StaticNodeChild, Reference, DynamicNodeChild, Declaration } from '@underverk/compiler'
 
 const ChildComponent = ({ data }: { data: Child[] }) => (
   <ol>
@@ -47,7 +47,27 @@ const StaticNodeComponent = (props: StaticNodeChild) => {
         🧱
       </span>
       {props.element}
+      {props.props.length !== 0 && (
+        <ul>
+          {props.props.map(prop => (
+            <PropComponent {...prop} />
+          ))}
+        </ul>
+      )}
       {<ChildComponent data={props.children}></ChildComponent>}
+    </li>
+  )
+}
+
+const PropComponent = (props: Declaration) => {
+  return (
+    <li>
+      <span role="img" aria-label="prop">
+        🖌
+      </span>
+      {props.name}
+      {' <- '}
+      {props.value.value}
     </li>
   )
 }
