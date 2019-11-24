@@ -33,27 +33,11 @@ export const Input: Component = {
       value: {
         type: 'function',
         arguments: [{ name: 'event' }],
-        body: {
-          type: 'operation',
-          name: 'setValue',
-          arguments: [
-            {
-              type: 'operation',
-              name: 'get',
-              arguments: [
-                { type: 'reference', value: 'valueKey' },
-                {
-                  type: 'operation',
-                  name: 'get',
-                  arguments: [
-                    { type: 'reference', value: 'targetKey' },
-                    { type: 'reference', value: 'event' },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
+        composition: [
+          { name: 'setValue' },
+          { name: 'get', arguments: [{ type: 'reference', value: 'valueKey' }] },
+          { name: 'get', arguments: [{ type: 'reference', value: 'targetKey' }] },
+        ],
       },
     },
   ],

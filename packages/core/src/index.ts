@@ -2,6 +2,7 @@ import * as t from '@babel/types'
 import babelGenerate from '@babel/generator'
 import { Component, State, Expression, Declaration, Effect, Child, Literal } from './types'
 export * from './types'
+export * from './manipulations'
 
 export const generate = (ast: t.VariableDeclaration): string => babelGenerate(ast).code
 
