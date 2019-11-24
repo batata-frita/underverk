@@ -14,8 +14,6 @@ export const App: Component = {
     { name: 'textKey', value: 'text' },
     { name: 'defaultState', value: { list: [], current: '' } },
     { name: 'submitLabel', value: 'Submit' },
-    { name: 'oneKey', value: 1 },
-    { name: 'zeroKey', value: 0 },
   ],
   functions: [
     {
@@ -25,7 +23,6 @@ export const App: Component = {
         { type: 'operation', name: 'objectOf', arguments: [{ type: 'reference', value: 'currentKey' }] },
         { type: 'operation', name: 'get', arguments: [{ type: 'reference', value: 'valueKey' }] },
         { type: 'operation', name: 'get', arguments: [{ type: 'reference', value: 'targetKey' }] },
-        { type: 'operation', name: 'nth', arguments: [{ type: 'reference', value: 'oneKey' }] },
       ],
     },
     {
@@ -96,7 +93,7 @@ export const App: Component = {
     defaultValue: { type: 'reference', value: 'defaultState' },
     updateFunctions: [
       { name: 'handleCurrentChange', transformation: 'getValueFromEvent' },
-      { name: 'updateClick', transformation: 'addToDo' },
+      { name: 'updateClick', transformation: 'addTodo' },
     ],
   },
 
@@ -132,7 +129,7 @@ export const App: Component = {
     {
       type: 'staticNode',
       element: 'button',
-      props: [{ name: 'onClick', value: { type: 'reference', value: 'handleClick' } }],
+      props: [{ name: 'onClick', value: { type: 'reference', value: 'updateClick' } }],
       children: [{ type: 'reference', value: 'submitLabel' }],
     },
     {

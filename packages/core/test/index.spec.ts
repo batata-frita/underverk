@@ -1,5 +1,5 @@
 import { compile, generate } from '../src'
-import { App } from './examples/todoExample'
+import { App, TodoItem, Checkmark } from './examples/todoExample'
 import { Button } from './examples/staticExample'
 
 describe('statefulExample', () => {
@@ -9,6 +9,8 @@ describe('statefulExample', () => {
 
   it('generates', () => {
     expect(generate(compile(App))).toMatchSnapshot()
+    expect(generate(compile(TodoItem))).toMatchSnapshot()
+    expect(generate(compile(Checkmark))).toMatchSnapshot()
   })
 })
 

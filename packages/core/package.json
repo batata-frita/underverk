@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "@babel/generator": "^7.7.4",
+    "@babel/template": "^7.7.4",
     "@babel/types": "^7.7.4"
   }
 }

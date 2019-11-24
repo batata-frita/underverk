@@ -28,7 +28,7 @@ export interface Literal {
 export interface Function {
   name: string
   arguments: Argument[]
-  composition: Operation[]
+  composition: Expression[]
 }
 
 export interface StaticNodeChild {

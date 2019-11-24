@@ -1,4 +1,5 @@
 import * as t from '@babel/types'
+import template from '@babel/template'
 import babelGenerate from '@babel/generator'
 import {
   Component,
@@ -12,6 +13,7 @@ import {
   Reference,
   Function,
   UpdateFunction,
+  Argument,
 } from './types'
 export * from './types'
 export * from './manipulations'
@@ -26,7 +28,7 @@ export const compile = (componentAst: Component): t.VariableDeclaration =>
         [],
         t.blockStatement([
           ...componentAst.literals.map(compileLiteral),
-          ...componentAst.functions.map(compileFunction),
+          ...componentAst.functions.map(compileFunction(componentAst.props)),
           ...(componentAst.state ? compileState(componentAst.state) : []),
           ...componentAst.computed.map(compileComputed),
           ...componentAst.effects.map(compileEffect),
@@ -53,6 +55,11 @@ const compileLiteral = (literalAst: Literal): t.VariableDeclaration => {
         t.variableDeclarator(t.identifier(literalAst.name), t.numericLiteral(literalAst.value)),
       ])
 
+    case 'object':
+      return t.variableDeclaration('const', [
+        t.variableDeclarator(t.identifier(literalAst.name), template.expression(JSON.stringify(literalAst.value))()),
+      ])
+
     default:
       console.warn('🙈 literal captured by default case', literalAst)
       return t.variableDeclaration('const', [
@@ -61,19 +68,24 @@ const compileLiteral = (literalAst: Literal): t.VariableDeclaration => {
   }
 }
 
-const compileFunction = (functionAst: Function): t.VariableDeclaration =>
+const compileFunction = (props: Argument[]) => (functionAst: Function): t.VariableDeclaration =>
   t.variableDeclaration('const', [
     t.variableDeclarator(
       t.identifier(functionAst.name),
-      t.arrowFunctionExpression(
-        functionAst.arguments.map(argument => t.identifier(argument.name)),
-        compileComposition(functionAst.composition),
-      ),
+      t.callExpression(t.identifier('underverk.useCallback'), [
+        t.arrowFunctionExpression(
+          functionAst.arguments.map(argument => t.identifier(argument.name)),
+          compileComposition(functionAst.composition),
+        ),
+        t.arrayExpression(props.map(({ name }) => t.identifier(name))),
+      ]),
     ),
   ])
 
 const compileComposition = (expressionAst: Expression[]): t.CallExpression =>
-  t.callExpression(t.identifier('compose'), expressionAst.map(compileExpression))
+  t.callExpression(t.callExpression(t.identifier('compose'), expressionAst.map(compileExpression)), [
+    t.identifier('event'),
+  ])
 
 const compileChildren = (childrenAst: Child[]): t.ReturnStatement =>
   t.returnStatement(t.jsxFragment(t.jsxOpeningFragment(), t.jsxClosingFragment(), childrenAst.map(compileChild)))
@@ -92,7 +104,7 @@ const compileChild = (childAst: Child): t.JSXElement | t.JSXText | t.JSXExpressi
 
     case 'dynamicNode':
       return t.jsxExpressionContainer(
-        t.callExpression(t.identifier('dynamicNode'), [
+        t.callExpression(t.identifier('underverk.dynamicNode'), [
           t.identifier(childAst.element),
           t.identifier(childAst.dependency),
         ]),
@@ -108,7 +120,7 @@ const compileProp = (propAst: Declaration): t.JSXAttribute =>
 
 const compileEffect = (effectAst: Effect): t.ExpressionStatement =>
   t.expressionStatement(
-    t.callExpression(t.identifier('useEffect'), [
+    t.callExpression(t.identifier('underverk.useEffect'), [
       t.arrowFunctionExpression(
         [],
         t.blockStatement([
@@ -151,8 +163,8 @@ const compileReference = (referenceAst: Reference): t.Identifier => t.identifier
 const compileState = (stateAst: State): t.VariableDeclaration[] => [
   t.variableDeclaration('const', [
     t.variableDeclarator(
-      t.arrayPattern([t.identifier('state'), t.identifier('updateState')]),
-      t.callExpression(t.identifier('useState'), [compileExpression(stateAst.defaultValue)]),
+      t.arrayPattern([t.identifier('state'), t.identifier('setState')]),
+      t.callExpression(t.identifier('underverk.useState'), [compileExpression(stateAst.defaultValue)]),
     ),
   ]),
   ...stateAst.updateFunctions.map(compileUpdateFunction),
@@ -162,7 +174,7 @@ const compileUpdateFunction = (updateFunctionAst: UpdateFunction): t.VariableDec
   t.variableDeclaration('const', [
     t.variableDeclarator(
       t.identifier(updateFunctionAst.name),
-      t.callExpression(t.identifier('useCallback'), [
+      t.callExpression(t.identifier('underverk.useCallback'), [
         t.arrowFunctionExpression(
           [t.identifier('event')],
           t.callExpression(t.identifier('setState'), [
