@@ -1,8 +1,3 @@
-export interface Literal {
-  type: 'literal'
-  value: string | number | boolean
-}
-
 export interface Reference {
   type: 'reference'
   value: string
@@ -20,7 +15,7 @@ export interface Function {
   body: Expression
 }
 
-export type Expression = Operation | Literal | Reference | Function
+export type Expression = Operation | Reference | Function
 
 export interface Argument {
   name: string
@@ -29,6 +24,11 @@ export interface Argument {
 export interface Declaration {
   name: string
   value: Expression
+}
+
+export interface Literal {
+  name: string
+  value: string | number | boolean
 }
 
 export interface NodeChild {
@@ -58,6 +58,7 @@ export interface Component {
   children: Child[]
   states: State[]
   effects: Effect[]
+  literals: Literal[]
   declarations: Declaration[]
 }
 

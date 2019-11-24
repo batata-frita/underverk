@@ -1,6 +1,6 @@
 import * as t from '@babel/types'
 import babelGenerate from '@babel/generator'
-import { Component, State, Expression, Declaration, Effect, Child } from './types'
+import { Component, State, Expression, Declaration, Effect, Child, Literal } from './types'
 export * from './types'
 
 export const generate = (ast: t.VariableDeclaration): string => babelGenerate(ast).code
@@ -12,6 +12,7 @@ export const compile = (componentAst: Component): t.VariableDeclaration =>
       t.arrowFunctionExpression(
         [],
         t.blockStatement([
+          ...componentAst.literals.map(compileLiteral),
           ...componentAst.states.map(compileState),
           ...componentAst.declarations.map(compileDeclaration),
           ...componentAst.effects.map(compileEffect),
@@ -20,6 +21,31 @@ export const compile = (componentAst: Component): t.VariableDeclaration =>
       ),
     ),
   ])
+
+const compileLiteral = (literalAst: Literal): t.VariableDeclaration => {
+  switch (typeof literalAst.value) {
+    case 'string':
+      return t.variableDeclaration('const', [
+        t.variableDeclarator(t.identifier(literalAst.name), t.stringLiteral(literalAst.value)),
+      ])
+
+    case 'boolean':
+      return t.variableDeclaration('const', [
+        t.variableDeclarator(t.identifier(literalAst.name), t.booleanLiteral(literalAst.value)),
+      ])
+
+    case 'number':
+      return t.variableDeclaration('const', [
+        t.variableDeclarator(t.identifier(literalAst.name), t.numericLiteral(literalAst.value)),
+      ])
+
+    default:
+      console.warn('🙈 literal captured by default case', literalAst)
+      return t.variableDeclaration('const', [
+        t.variableDeclarator(t.identifier(literalAst.name), t.stringLiteral(`${literalAst.value}`)),
+      ])
+  }
+}
 
 const compileChildren = (childrenAst: Child[]): t.ReturnStatement =>
   t.returnStatement(t.jsxFragment(t.jsxOpeningFragment(), t.jsxClosingFragment(), childrenAst.map(compileChild)))
@@ -66,9 +92,6 @@ const compileDeclaration = (declarationAst: Declaration): t.VariableDeclaration 
 
 const compileExpression = (expressionAst: Expression): t.Expression => {
   switch (expressionAst.type) {
-    case 'literal':
-      return t.stringLiteral(`${expressionAst.value}`)
-
     case 'function':
       return t.callExpression(t.identifier('callback'), [
         t.arrowFunctionExpression(

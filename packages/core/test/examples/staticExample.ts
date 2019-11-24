@@ -5,6 +5,10 @@ export const Button: Component = {
   props: [{ name: 'onClick' }],
   states: [],
   effects: [],
+  literals: [
+    { name: 'hello', value: 'Hello' },
+    { name: 'world', value: 'World' },
+  ],
   declarations: [
     {
       name: 'label',
@@ -12,8 +16,8 @@ export const Button: Component = {
         type: 'operation',
         name: 'concat',
         arguments: [
-          { type: 'literal', value: 'Hello' },
-          { type: 'literal', value: 'World' },
+          { type: 'reference', value: 'hello' },
+          { type: 'reference', value: 'world' },
         ],
       },
     },

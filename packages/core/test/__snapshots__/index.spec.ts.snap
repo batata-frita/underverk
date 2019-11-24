@@ -1,9 +1,306 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`statefulExample compiles 1`] = `
+Object {
+  "declarations": Array [
+    Object {
+      "id": Object {
+        "name": "Input",
+        "type": "Identifier",
+      },
+      "init": Object {
+        "async": false,
+        "body": Object {
+          "body": Array [
+            Object {
+              "declarations": Array [
+                Object {
+                  "id": Object {
+                    "name": "valueKey",
+                    "type": "Identifier",
+                  },
+                  "init": Object {
+                    "type": "StringLiteral",
+                    "value": "value",
+                  },
+                  "type": "VariableDeclarator",
+                },
+              ],
+              "kind": "const",
+              "type": "VariableDeclaration",
+            },
+            Object {
+              "declarations": Array [
+                Object {
+                  "id": Object {
+                    "name": "targetKey",
+                    "type": "Identifier",
+                  },
+                  "init": Object {
+                    "type": "StringLiteral",
+                    "value": "target",
+                  },
+                  "type": "VariableDeclarator",
+                },
+              ],
+              "kind": "const",
+              "type": "VariableDeclaration",
+            },
+            Object {
+              "declarations": Array [
+                Object {
+                  "id": Object {
+                    "name": "defaultValue",
+                    "type": "Identifier",
+                  },
+                  "init": Object {
+                    "type": "StringLiteral",
+                    "value": "",
+                  },
+                  "type": "VariableDeclarator",
+                },
+              ],
+              "kind": "const",
+              "type": "VariableDeclaration",
+            },
+            Object {
+              "declarations": Array [
+                Object {
+                  "id": Object {
+                    "elements": Array [
+                      Object {
+                        "name": "value",
+                        "type": "Identifier",
+                      },
+                      Object {
+                        "name": "setValue",
+                        "type": "Identifier",
+                      },
+                    ],
+                    "type": "ArrayPattern",
+                  },
+                  "init": Object {
+                    "arguments": Array [
+                      Object {
+                        "name": "defaultValue",
+                        "type": "Identifier",
+                      },
+                    ],
+                    "callee": Object {
+                      "name": "state",
+                      "type": "Identifier",
+                    },
+                    "type": "CallExpression",
+                  },
+                  "type": "VariableDeclarator",
+                },
+              ],
+              "kind": "const",
+              "type": "VariableDeclaration",
+            },
+            Object {
+              "declarations": Array [
+                Object {
+                  "id": Object {
+                    "name": "handleChange",
+                    "type": "Identifier",
+                  },
+                  "init": Object {
+                    "arguments": Array [
+                      Object {
+                        "async": false,
+                        "body": Object {
+                          "arguments": Array [
+                            Object {
+                              "arguments": Array [
+                                Object {
+                                  "name": "valueKey",
+                                  "type": "Identifier",
+                                },
+                                Object {
+                                  "arguments": Array [
+                                    Object {
+                                      "name": "targetKey",
+                                      "type": "Identifier",
+                                    },
+                                    Object {
+                                      "name": "event",
+                                      "type": "Identifier",
+                                    },
+                                  ],
+                                  "callee": Object {
+                                    "name": "get",
+                                    "type": "Identifier",
+                                  },
+                                  "type": "CallExpression",
+                                },
+                              ],
+                              "callee": Object {
+                                "name": "get",
+                                "type": "Identifier",
+                              },
+                              "type": "CallExpression",
+                            },
+                          ],
+                          "callee": Object {
+                            "name": "setValue",
+                            "type": "Identifier",
+                          },
+                          "type": "CallExpression",
+                        },
+                        "params": Array [
+                          Object {
+                            "name": "event",
+                            "type": "Identifier",
+                          },
+                        ],
+                        "type": "ArrowFunctionExpression",
+                      },
+                      Object {
+                        "elements": Array [],
+                        "type": "ArrayExpression",
+                      },
+                    ],
+                    "callee": Object {
+                      "name": "callback",
+                      "type": "Identifier",
+                    },
+                    "type": "CallExpression",
+                  },
+                  "type": "VariableDeclarator",
+                },
+              ],
+              "kind": "const",
+              "type": "VariableDeclaration",
+            },
+            Object {
+              "expression": Object {
+                "arguments": Array [
+                  Object {
+                    "async": false,
+                    "body": Object {
+                      "body": Array [
+                        Object {
+                          "expression": Object {
+                            "arguments": Array [
+                              Object {
+                                "name": "value",
+                                "type": "Identifier",
+                              },
+                            ],
+                            "callee": Object {
+                              "name": "log",
+                              "type": "Identifier",
+                            },
+                            "type": "CallExpression",
+                          },
+                          "type": "ExpressionStatement",
+                        },
+                      ],
+                      "directives": Array [],
+                      "type": "BlockStatement",
+                    },
+                    "params": Array [],
+                    "type": "ArrowFunctionExpression",
+                  },
+                  Object {
+                    "elements": Array [
+                      Object {
+                        "name": "value",
+                        "type": "Identifier",
+                      },
+                    ],
+                    "type": "ArrayExpression",
+                  },
+                ],
+                "callee": Object {
+                  "name": "effect",
+                  "type": "Identifier",
+                },
+                "type": "CallExpression",
+              },
+              "type": "ExpressionStatement",
+            },
+            Object {
+              "argument": Object {
+                "children": Array [
+                  Object {
+                    "children": Array [],
+                    "closingElement": null,
+                    "openingElement": Object {
+                      "attributes": Array [
+                        Object {
+                          "name": Object {
+                            "name": "onChange",
+                            "type": "JSXIdentifier",
+                          },
+                          "type": "JSXAttribute",
+                          "value": Object {
+                            "expression": Object {
+                              "name": "handleChange",
+                              "type": "Identifier",
+                            },
+                            "type": "JSXExpressionContainer",
+                          },
+                        },
+                        Object {
+                          "name": Object {
+                            "name": "value",
+                            "type": "JSXIdentifier",
+                          },
+                          "type": "JSXAttribute",
+                          "value": Object {
+                            "expression": Object {
+                              "name": "value",
+                              "type": "Identifier",
+                            },
+                            "type": "JSXExpressionContainer",
+                          },
+                        },
+                      ],
+                      "name": Object {
+                        "name": "input",
+                        "type": "JSXIdentifier",
+                      },
+                      "selfClosing": true,
+                      "type": "JSXOpeningElement",
+                    },
+                    "selfClosing": true,
+                    "type": "JSXElement",
+                  },
+                ],
+                "closingFragment": Object {
+                  "type": "JSXClosingFragment",
+                },
+                "openingFragment": Object {
+                  "type": "JSXOpeningFragment",
+                },
+                "type": "JSXFragment",
+              },
+              "type": "ReturnStatement",
+            },
+          ],
+          "directives": Array [],
+          "type": "BlockStatement",
+        },
+        "params": Array [],
+        "type": "ArrowFunctionExpression",
+      },
+      "type": "VariableDeclarator",
+    },
+  ],
+  "kind": "const",
+  "type": "VariableDeclaration",
+}
+`;
+
 exports[`statefulExample generates 1`] = `
 "const Input = () => {
-  const [value, setValue] = state(\\"\\");
-  const handleChange = callback(event => setValue(get(\\"value\\", get(\\"target\\", event))), []);
+  const valueKey = \\"value\\";
+  const targetKey = \\"target\\";
+  const defaultValue = \\"\\";
+  const [value, setValue] = state(defaultValue);
+  const handleChange = callback(event => setValue(get(valueKey, get(targetKey, event))), []);
   effect(() => {
     log(value);
   }, [value]);
@@ -11,9 +308,145 @@ exports[`statefulExample generates 1`] = `
 };"
 `;
 
+exports[`staticExample compiles 1`] = `
+Object {
+  "declarations": Array [
+    Object {
+      "id": Object {
+        "name": "Button",
+        "type": "Identifier",
+      },
+      "init": Object {
+        "async": false,
+        "body": Object {
+          "body": Array [
+            Object {
+              "declarations": Array [
+                Object {
+                  "id": Object {
+                    "name": "hello",
+                    "type": "Identifier",
+                  },
+                  "init": Object {
+                    "type": "StringLiteral",
+                    "value": "Hello",
+                  },
+                  "type": "VariableDeclarator",
+                },
+              ],
+              "kind": "const",
+              "type": "VariableDeclaration",
+            },
+            Object {
+              "declarations": Array [
+                Object {
+                  "id": Object {
+                    "name": "world",
+                    "type": "Identifier",
+                  },
+                  "init": Object {
+                    "type": "StringLiteral",
+                    "value": "World",
+                  },
+                  "type": "VariableDeclarator",
+                },
+              ],
+              "kind": "const",
+              "type": "VariableDeclaration",
+            },
+            Object {
+              "declarations": Array [
+                Object {
+                  "id": Object {
+                    "name": "label",
+                    "type": "Identifier",
+                  },
+                  "init": Object {
+                    "arguments": Array [
+                      Object {
+                        "name": "hello",
+                        "type": "Identifier",
+                      },
+                      Object {
+                        "name": "world",
+                        "type": "Identifier",
+                      },
+                    ],
+                    "callee": Object {
+                      "name": "concat",
+                      "type": "Identifier",
+                    },
+                    "type": "CallExpression",
+                  },
+                  "type": "VariableDeclarator",
+                },
+              ],
+              "kind": "const",
+              "type": "VariableDeclaration",
+            },
+            Object {
+              "argument": Object {
+                "children": Array [
+                  Object {
+                    "children": Array [
+                      Object {
+                        "expression": Object {
+                          "name": "label",
+                          "type": "Identifier",
+                        },
+                        "type": "JSXExpressionContainer",
+                      },
+                    ],
+                    "closingElement": Object {
+                      "name": Object {
+                        "name": "div",
+                        "type": "JSXIdentifier",
+                      },
+                      "type": "JSXClosingElement",
+                    },
+                    "openingElement": Object {
+                      "attributes": Array [],
+                      "name": Object {
+                        "name": "div",
+                        "type": "JSXIdentifier",
+                      },
+                      "selfClosing": false,
+                      "type": "JSXOpeningElement",
+                    },
+                    "selfClosing": false,
+                    "type": "JSXElement",
+                  },
+                ],
+                "closingFragment": Object {
+                  "type": "JSXClosingFragment",
+                },
+                "openingFragment": Object {
+                  "type": "JSXOpeningFragment",
+                },
+                "type": "JSXFragment",
+              },
+              "type": "ReturnStatement",
+            },
+          ],
+          "directives": Array [],
+          "type": "BlockStatement",
+        },
+        "params": Array [],
+        "type": "ArrowFunctionExpression",
+      },
+      "type": "VariableDeclarator",
+    },
+  ],
+  "kind": "const",
+  "type": "VariableDeclaration",
+}
+`;
+
 exports[`staticExample generates 1`] = `
 "const Button = () => {
-  const label = concat(\\"Hello\\", \\"World\\");
+  const hello = \\"Hello\\";
+  const world = \\"World\\";
+  const label = concat(hello, world);
   return <><div>{label}</div></>;
 };"
 `;

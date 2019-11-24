@@ -7,7 +7,7 @@ export const Input: Component = {
     {
       name: 'value',
       updateFunction: 'setValue',
-      defaultValue: { type: 'literal', value: '' },
+      defaultValue: { type: 'reference', value: 'defaultValue' },
     },
   ],
   effects: [
@@ -21,6 +21,11 @@ export const Input: Component = {
         },
       ],
     },
+  ],
+  literals: [
+    { name: 'valueKey', value: 'value' },
+    { name: 'targetKey', value: 'target' },
+    { name: 'defaultValue', value: '' },
   ],
   declarations: [
     {
@@ -36,12 +41,12 @@ export const Input: Component = {
               type: 'operation',
               name: 'get',
               arguments: [
-                { type: 'literal', value: 'value' },
+                { type: 'reference', value: 'valueKey' },
                 {
                   type: 'operation',
                   name: 'get',
                   arguments: [
-                    { type: 'literal', value: 'target' },
+                    { type: 'reference', value: 'targetKey' },
                     { type: 'reference', value: 'event' },
                   ],
                 },
