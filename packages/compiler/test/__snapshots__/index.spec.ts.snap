@@ -552,21 +552,36 @@ Object {
                         "body": Object {
                           "arguments": Array [
                             Object {
-                              "arguments": Array [
+                              "properties": Array [
                                 Object {
-                                  "name": "event",
-                                  "type": "Identifier",
+                                  "argument": Object {
+                                    "name": "state",
+                                    "type": "Identifier",
+                                  },
+                                  "type": "SpreadElement",
                                 },
                                 Object {
-                                  "name": "state",
-                                  "type": "Identifier",
+                                  "argument": Object {
+                                    "arguments": Array [
+                                      Object {
+                                        "name": "event",
+                                        "type": "Identifier",
+                                      },
+                                      Object {
+                                        "name": "state",
+                                        "type": "Identifier",
+                                      },
+                                    ],
+                                    "callee": Object {
+                                      "name": "getValueFromEvent",
+                                      "type": "Identifier",
+                                    },
+                                    "type": "CallExpression",
+                                  },
+                                  "type": "SpreadElement",
                                 },
                               ],
-                              "callee": Object {
-                                "name": "getValueFromEvent",
-                                "type": "Identifier",
-                              },
-                              "type": "CallExpression",
+                              "type": "ObjectExpression",
                             },
                           ],
                           "callee": Object {
@@ -587,6 +602,10 @@ Object {
                         "elements": Array [
                           Object {
                             "name": "state",
+                            "type": "Identifier",
+                          },
+                          Object {
+                            "name": "getValueFromEvent",
                             "type": "Identifier",
                           },
                         ],
@@ -619,21 +638,36 @@ Object {
                         "body": Object {
                           "arguments": Array [
                             Object {
-                              "arguments": Array [
+                              "properties": Array [
                                 Object {
-                                  "name": "event",
-                                  "type": "Identifier",
+                                  "argument": Object {
+                                    "name": "state",
+                                    "type": "Identifier",
+                                  },
+                                  "type": "SpreadElement",
                                 },
                                 Object {
-                                  "name": "state",
-                                  "type": "Identifier",
+                                  "argument": Object {
+                                    "arguments": Array [
+                                      Object {
+                                        "name": "event",
+                                        "type": "Identifier",
+                                      },
+                                      Object {
+                                        "name": "state",
+                                        "type": "Identifier",
+                                      },
+                                    ],
+                                    "callee": Object {
+                                      "name": "addTodo",
+                                      "type": "Identifier",
+                                    },
+                                    "type": "CallExpression",
+                                  },
+                                  "type": "SpreadElement",
                                 },
                               ],
-                              "callee": Object {
-                                "name": "addTodo",
-                                "type": "Identifier",
-                              },
-                              "type": "CallExpression",
+                              "type": "ObjectExpression",
                             },
                           ],
                           "callee": Object {
@@ -654,6 +688,10 @@ Object {
                         "elements": Array [
                           Object {
                             "name": "state",
+                            "type": "Identifier",
+                          },
+                          Object {
+                            "name": "addTodo",
                             "type": "Identifier",
                           },
                         ],
@@ -936,8 +974,12 @@ exports[`statefulExample generates 1`] = `
   const getValueFromEvent = useCallback((state, event) => compose(objectOf(currentKey), get(valueKey), get(targetKey))(event), []);
   const addTodo = useCallback((event, state) => compose(set(listKey, append(set(doneKey, falseKey, objectOf(textKey, get(currentKey, state))), get(listKey, state))), set(currentKey, defaultCurrent), constant(state))(event), []);
   const [state, setState] = useState(defaultState);
-  const handleCurrentChange = useCallback(event => setState(getValueFromEvent(event, state)), [state]);
-  const updateClick = useCallback(event => setState(addTodo(event, state)), [state]);
+  const handleCurrentChange = useCallback(event => setState({ ...state,
+    ...getValueFromEvent(event, state)
+  }), [state, getValueFromEvent]);
+  const updateClick = useCallback(event => setState({ ...state,
+    ...addTodo(event, state)
+  }), [state, addTodo]);
   const list = get(listKey, state);
   useEffect(() => {
     log(list, noop);
@@ -952,7 +994,7 @@ exports[`statefulExample generates 2`] = `
   text: text
 }) => {
   const emptyObject = {};
-  const theUndefined;
+  let theUndefined;
   const checkedProps = when(done, emptyObject, theUndefined);
   return <><li>{text}{dynamicNode(Checkmark, checkedProps)}</li></>;
 };"
