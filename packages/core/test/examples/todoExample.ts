@@ -6,31 +6,119 @@ export const App: Component = {
   literals: [
     { name: 'valueKey', value: 'value' },
     { name: 'targetKey', value: 'target' },
-    { name: 'defaultList', value: [] },
+    { name: 'listKey', value: 'list' },
+    { name: 'currentKey', value: 'current' },
+    { name: 'doneKey', value: 'done' },
+    { name: 'falseKey', value: 'false' },
     { name: 'defaultCurrent', value: '' },
+    { name: 'textKey', value: 'text' },
+    { name: 'defaultState', value: { list: [], current: '' } },
     { name: 'submitLabel', value: 'Submit' },
+    { name: 'oneKey', value: 1 },
+    { name: 'zeroKey', value: 0 },
   ],
   functions: [
     {
       name: 'getValueFromEvent',
-      arguments: [{ name: 'event' }],
+      arguments: [{ name: 'state' }, { name: 'event' }],
       composition: [
+        { type: 'operation', name: 'objectOf', arguments: [{ type: 'reference', value: 'currentKey' }] },
         { type: 'operation', name: 'get', arguments: [{ type: 'reference', value: 'valueKey' }] },
         { type: 'operation', name: 'get', arguments: [{ type: 'reference', value: 'targetKey' }] },
+        { type: 'operation', name: 'nth', arguments: [{ type: 'reference', value: 'oneKey' }] },
       ],
     },
-  ],
-  states: [
-    { name: 'list', defaultValue: { type: 'reference', value: 'defaultValue' } },
     {
-      name: 'current',
-      defaultValue: { type: 'reference', value: 'defaultCurrent' },
-      updateFunctions: [
-        { name: 'handleCurrentChange', transformation: 'getValueFromEvent' },
-        { name: 'updateClick', transformation: 'addToDo' },
+      name: 'addTodo',
+      arguments: [{ name: 'event' }, { name: 'state' }],
+      composition: [
+        {
+          type: 'operation',
+          name: 'set',
+          arguments: [
+            { type: 'reference', value: 'listKey' },
+            {
+              type: 'operation',
+              name: 'append',
+              arguments: [
+                {
+                  type: 'operation',
+                  name: 'set',
+                  arguments: [
+                    { type: 'reference', value: 'doneKey' },
+                    { type: 'reference', value: 'falseKey' },
+                    {
+                      type: 'operation',
+                      name: 'objectOf',
+                      arguments: [
+                        {
+                          type: 'reference',
+                          value: 'textKey',
+                        },
+                        {
+                          type: 'operation',
+                          name: 'get',
+                          arguments: [
+                            { type: 'reference', value: 'currentKey' },
+                            { type: 'reference', value: 'state' },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  type: 'operation',
+                  name: 'get',
+                  arguments: [
+                    { type: 'reference', value: 'listKey' },
+                    { type: 'reference', value: 'state' },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: 'operation',
+          name: 'set',
+          arguments: [
+            { type: 'reference', value: 'currentKey' },
+            { type: 'reference', value: 'defaultCurrent' },
+          ],
+        },
+        { type: 'operation', name: 'constant', arguments: [{ type: 'reference', value: 'state' }] },
       ],
     },
   ],
+
+  state: {
+    defaultValue: { type: 'reference', value: 'defaultState' },
+    updateFunctions: [
+      { name: 'handleCurrentChange', transformation: 'getValueFromEvent' },
+      { name: 'updateClick', transformation: 'addToDo' },
+    ],
+  },
+
+  computed: [
+    {
+      name: 'list',
+      operation: 'get',
+      arguments: [
+        { type: 'reference', value: 'listKey' },
+        { type: 'reference', value: 'state' },
+      ],
+    },
+  ],
+
+  effects: [
+    {
+      type: 'log',
+      dependency: 'list',
+      handler: 'noop',
+    },
+  ],
+
   children: [
     {
       type: 'staticNode',
@@ -64,10 +152,120 @@ export const App: Component = {
 
 export const TodoItem: Component = {
   name: 'TodoItem',
-  // props: []
+  props: [
+    {
+      name: 'done',
+    },
+    {
+      name: 'text',
+    },
+  ],
+  literals: [
+    {
+      name: 'emptyObject',
+      value: {},
+    },
+  ],
+  functions: [],
+  computed: [
+    {
+      name: 'checkedProps',
+      operation: 'if',
+      arguments: [
+        {
+          type: 'reference',
+          value: 'done',
+        },
+        {
+          type: 'reference',
+          value: 'emptyObject',
+        },
+      ],
+    },
+  ],
+  effects: [],
+  children: [
+    {
+      type: 'staticNode',
+      element: 'li',
+      props: [],
+      children: [
+        {
+          type: 'reference',
+          value: 'text',
+        },
+        {
+          type: 'dynamicNode',
+          element: 'Checkmark',
+          dependency: 'checkedProps',
+        },
+      ],
+    },
+  ],
+}
+
+export const Checkmark: Component = {
+  name: 'Checkmark',
+  props: [],
+  literals: [
+    { name: 'width', value: 20 },
+    { name: 'height', value: 20 },
+    { name: 'path', value: 'M0,5 L0,5 L5,10 L10,0 Z' },
+    { name: 'noneFill', value: 'none' },
+    { name: 'strokeWidth', value: '1px' },
+  ],
+  functions: [],
+  computed: [],
+  effects: [],
+  children: [
+    {
+      type: 'staticNode',
+      element: 'svg',
+      props: [
+        {
+          name: 'width',
+          value: { type: 'reference', value: 'width' },
+        },
+        {
+          name: 'height',
+          value: { type: 'reference', value: 'height' },
+        },
+      ],
+      children: [
+        {
+          type: 'staticNode',
+          element: 'path',
+          props: [
+            {
+              name: 'fill',
+              value: {
+                type: 'reference',
+                value: 'noneFill',
+              },
+            },
+            {
+              name: 'strokeWidth',
+              value: {
+                type: 'reference',
+                value: 'strokeWidth',
+              },
+            },
+            {
+              name: 'd',
+              value: {
+                type: 'reference',
+                value: 'path',
+              },
+            },
+          ],
+          children: [],
+        },
+      ],
+    },
+  ],
 }
 
 export const project: Project = {
   name: 'Todo',
-  components: [App, TodoList, TodoItem],
+  components: [App, TodoItem, Checkmark],
 }

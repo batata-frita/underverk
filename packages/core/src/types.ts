@@ -22,7 +22,7 @@ export interface Declaration {
 
 export interface Literal {
   name: string
-  value: string | number | boolean
+  value: string | number | boolean | object
 }
 
 export interface Function {
@@ -31,36 +31,56 @@ export interface Function {
   composition: Operation[]
 }
 
-export interface NodeChild {
-  type: 'node'
+export interface StaticNodeChild {
+  type: 'staticNode'
   element: string
   props: Declaration[]
   children: Child[]
 }
 
-export type Child = NodeChild | Expression
+export interface DynamicNodeChild {
+  type: 'dynamicNode'
+  element: string
+  dependency: string
+}
+
+export type Child = StaticNodeChild | DynamicNodeChild | Expression
+
+export interface UpdateFunction {
+  name: string
+
+  // this points to a function
+  transformation: string
+}
 
 export interface State {
-  name: string
-  updateFunction: string
+  updateFunctions: UpdateFunction[]
   defaultValue: Expression
 }
 
 export interface Effect {
   type: 'log'
-  dependencies: string[]
-  arguments: Expression[]
+  dependency: string
+  handler: string
+}
+
+export interface Computed {
+  name: string
+  operation: string
+  arguments: Reference[]
 }
 
 export interface Component {
   name: string
   props: Argument[]
-  children: Child[]
-  states: State[]
-  effects: Effect[]
+
   literals: Literal[]
   functions: Function[]
-  declarations: Declaration[]
+  state?: State
+  computed: Computed[]
+
+  effects: Effect[]
+  children: Child[]
 }
 
 export interface Project {
