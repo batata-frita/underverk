@@ -25,7 +25,7 @@ export const compile = (componentAst: Component): t.VariableDeclaration =>
     t.variableDeclarator(
       t.identifier(componentAst.name),
       t.arrowFunctionExpression(
-        [],
+        [compileProps(componentAst.props)],
         t.blockStatement([
           ...componentAst.literals.map(compileLiteral),
           ...componentAst.functions.map(compileFunction(componentAst.props)),
@@ -37,6 +37,9 @@ export const compile = (componentAst: Component): t.VariableDeclaration =>
       ),
     ),
   ])
+
+const compileProps = (propsAst: Argument[]): t.ObjectPattern =>
+  t.objectPattern(propsAst.map(prop => t.objectProperty(t.identifier(prop.name), t.identifier(prop.name))))
 
 const compileLiteral = (literalAst: Literal): t.VariableDeclaration => {
   switch (typeof literalAst.value) {
@@ -60,6 +63,9 @@ const compileLiteral = (literalAst: Literal): t.VariableDeclaration => {
         t.variableDeclarator(t.identifier(literalAst.name), template.expression(JSON.stringify(literalAst.value))()),
       ])
 
+    case 'undefined':
+      return t.variableDeclaration('let', [t.variableDeclarator(t.identifier(literalAst.name))])
+
     default:
       console.warn('🙈 literal captured by default case', literalAst)
       return t.variableDeclaration('const', [
@@ -72,7 +78,7 @@ const compileFunction = (props: Argument[]) => (functionAst: Function): t.Variab
   t.variableDeclaration('const', [
     t.variableDeclarator(
       t.identifier(functionAst.name),
-      t.callExpression(t.identifier('underverk.useCallback'), [
+      t.callExpression(t.identifier('useCallback'), [
         t.arrowFunctionExpression(
           functionAst.arguments.map(argument => t.identifier(argument.name)),
           compileComposition(functionAst.composition),
@@ -96,7 +102,7 @@ const compileChild = (childAst: Child): t.JSXElement | t.JSXText | t.JSXExpressi
       const selfClosingTag = childAst.children.length === 0
 
       return t.jsxElement(
-        t.jsxOpeningElement(t.jsxIdentifier(childAst.element), childAst.props.map(compileProp), selfClosingTag),
+        t.jsxOpeningElement(t.jsxIdentifier(childAst.element), childAst.props.map(compileJsxProp), selfClosingTag),
         selfClosingTag ? undefined : t.jsxClosingElement(t.jsxIdentifier(childAst.element)),
         childAst.children.map(compileChild),
         selfClosingTag,
@@ -104,7 +110,7 @@ const compileChild = (childAst: Child): t.JSXElement | t.JSXText | t.JSXExpressi
 
     case 'dynamicNode':
       return t.jsxExpressionContainer(
-        t.callExpression(t.identifier('underverk.dynamicNode'), [
+        t.callExpression(t.identifier('dynamicNode'), [
           t.identifier(childAst.element),
           t.identifier(childAst.dependency),
         ]),
@@ -115,12 +121,12 @@ const compileChild = (childAst: Child): t.JSXElement | t.JSXText | t.JSXExpressi
   }
 }
 
-const compileProp = (propAst: Declaration): t.JSXAttribute =>
+const compileJsxProp = (propAst: Declaration): t.JSXAttribute =>
   t.jsxAttribute(t.jsxIdentifier(propAst.name), t.jsxExpressionContainer(compileExpression(propAst.value)))
 
 const compileEffect = (effectAst: Effect): t.ExpressionStatement =>
   t.expressionStatement(
-    t.callExpression(t.identifier('underverk.useEffect'), [
+    t.callExpression(t.identifier('useEffect'), [
       t.arrowFunctionExpression(
         [],
         t.blockStatement([
@@ -164,7 +170,7 @@ const compileState = (stateAst: State): t.VariableDeclaration[] => [
   t.variableDeclaration('const', [
     t.variableDeclarator(
       t.arrayPattern([t.identifier('state'), t.identifier('setState')]),
-      t.callExpression(t.identifier('underverk.useState'), [compileExpression(stateAst.defaultValue)]),
+      t.callExpression(t.identifier('useState'), [compileExpression(stateAst.defaultValue)]),
     ),
   ]),
   ...stateAst.updateFunctions.map(compileUpdateFunction),
@@ -174,17 +180,22 @@ const compileUpdateFunction = (updateFunctionAst: UpdateFunction): t.VariableDec
   t.variableDeclaration('const', [
     t.variableDeclarator(
       t.identifier(updateFunctionAst.name),
-      t.callExpression(t.identifier('underverk.useCallback'), [
+      t.callExpression(t.identifier('useCallback'), [
         t.arrowFunctionExpression(
           [t.identifier('event')],
           t.callExpression(t.identifier('setState'), [
-            t.callExpression(t.identifier(updateFunctionAst.transformation), [
-              t.identifier('event'),
-              t.identifier('state'),
+            t.objectExpression([
+              t.spreadElement(t.identifier('state')),
+              t.spreadElement(
+                t.callExpression(t.identifier(updateFunctionAst.transformation), [
+                  t.identifier('event'),
+                  t.identifier('state'),
+                ]),
+              ),
             ]),
           ]),
         ),
-        t.arrayExpression([t.identifier('state')]),
+        t.arrayExpression([t.identifier('state'), t.identifier(updateFunctionAst.transformation)]),
       ]),
     ),
   ])

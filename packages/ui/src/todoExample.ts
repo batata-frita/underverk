@@ -1,4 +1,4 @@
-import { Component, Project } from '../../src/types'
+import { Component, Project } from '@underverk/compiler'
 
 export const App: Component = {
   name: 'App',
@@ -18,7 +18,7 @@ export const App: Component = {
   functions: [
     {
       name: 'getValueFromEvent',
-      arguments: [{ name: 'state' }, { name: 'event' }],
+      arguments: [{ name: 'event' }, { name: 'state' }],
       composition: [
         { type: 'operation', name: 'objectOf', arguments: [{ type: 'reference', value: 'currentKey' }] },
         { type: 'operation', name: 'get', arguments: [{ type: 'reference', value: 'valueKey' }] },
@@ -106,6 +106,14 @@ export const App: Component = {
         { type: 'reference', value: 'state' },
       ],
     },
+    {
+      name: 'value',
+      operation: 'get',
+      arguments: [
+        { type: 'reference', value: 'currentKey' },
+        { type: 'reference', value: 'state' },
+      ],
+    },
   ],
 
   effects: [
@@ -122,7 +130,7 @@ export const App: Component = {
       element: 'input',
       props: [
         { name: 'onChange', value: { type: 'reference', value: 'handleCurrentChange' } },
-        { name: 'value', value: { type: 'reference', value: 'valueKey' } },
+        { name: 'value', value: { type: 'reference', value: 'value' } },
       ],
       children: [],
     },

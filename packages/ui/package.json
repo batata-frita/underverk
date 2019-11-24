@@ -8,9 +8,12 @@
     "@types/react": "16.9.12",
     "@types/react-dom": "16.9.4",
     "@underverk/compiler": "1.0.0",
+    "@underverk/prelude": "1.0.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-scripts": "3.2.0",
+    "@babel/core": "^7.7.4",
+    "@babel/plugin-transform-react-jsx": "^7.7.4",
     "typescript": "3.7.2"
   },
   "scripts": {

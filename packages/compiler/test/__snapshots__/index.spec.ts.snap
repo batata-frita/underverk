@@ -318,7 +318,7 @@ Object {
                       },
                     ],
                     "callee": Object {
-                      "name": "underverk.useCallback",
+                      "name": "useCallback",
                       "type": "Identifier",
                     },
                     "type": "CallExpression",
@@ -492,7 +492,7 @@ Object {
                       },
                     ],
                     "callee": Object {
-                      "name": "underverk.useCallback",
+                      "name": "useCallback",
                       "type": "Identifier",
                     },
                     "type": "CallExpression",
@@ -527,7 +527,7 @@ Object {
                       },
                     ],
                     "callee": Object {
-                      "name": "underverk.useState",
+                      "name": "useState",
                       "type": "Identifier",
                     },
                     "type": "CallExpression",
@@ -594,7 +594,7 @@ Object {
                       },
                     ],
                     "callee": Object {
-                      "name": "underverk.useCallback",
+                      "name": "useCallback",
                       "type": "Identifier",
                     },
                     "type": "CallExpression",
@@ -661,7 +661,7 @@ Object {
                       },
                     ],
                     "callee": Object {
-                      "name": "underverk.useCallback",
+                      "name": "useCallback",
                       "type": "Identifier",
                     },
                     "type": "CallExpression",
@@ -747,7 +747,7 @@ Object {
                   },
                 ],
                 "callee": Object {
-                  "name": "underverk.useEffect",
+                  "name": "useEffect",
                   "type": "Identifier",
                 },
                 "type": "CallExpression",
@@ -784,7 +784,7 @@ Object {
                           "type": "JSXAttribute",
                           "value": Object {
                             "expression": Object {
-                              "name": "value",
+                              "name": "valueKey",
                               "type": "Identifier",
                             },
                             "type": "JSXExpressionContainer",
@@ -860,7 +860,7 @@ Object {
                             },
                           ],
                           "callee": Object {
-                            "name": "underverk.dynamicNode",
+                            "name": "dynamicNode",
                             "type": "Identifier",
                           },
                           "type": "CallExpression",
@@ -902,7 +902,12 @@ Object {
           "directives": Array [],
           "type": "BlockStatement",
         },
-        "params": Array [],
+        "params": Array [
+          Object {
+            "properties": Array [],
+            "type": "ObjectPattern",
+          },
+        ],
         "type": "ArrowFunctionExpression",
       },
       "type": "VariableDeclarator",
@@ -914,7 +919,7 @@ Object {
 `;
 
 exports[`statefulExample generates 1`] = `
-"const App = () => {
+"const App = ({}) => {
   const valueKey = \\"value\\";
   const targetKey = \\"target\\";
   const listKey = \\"list\\";
@@ -928,35 +933,40 @@ exports[`statefulExample generates 1`] = `
     \\"current\\": \\"\\"
   };
   const submitLabel = \\"Submit\\";
-  const getValueFromEvent = underverk.useCallback((state, event) => compose(objectOf(currentKey), get(valueKey), get(targetKey))(event), []);
-  const addTodo = underverk.useCallback((event, state) => compose(set(listKey, append(set(doneKey, falseKey, objectOf(textKey, get(currentKey, state))), get(listKey, state))), set(currentKey, defaultCurrent), constant(state))(event), []);
-  const [state, setState] = underverk.useState(defaultState);
-  const handleCurrentChange = underverk.useCallback(event => setState(getValueFromEvent(event, state)), [state]);
-  const updateClick = underverk.useCallback(event => setState(addTodo(event, state)), [state]);
+  const getValueFromEvent = useCallback((state, event) => compose(objectOf(currentKey), get(valueKey), get(targetKey))(event), []);
+  const addTodo = useCallback((event, state) => compose(set(listKey, append(set(doneKey, falseKey, objectOf(textKey, get(currentKey, state))), get(listKey, state))), set(currentKey, defaultCurrent), constant(state))(event), []);
+  const [state, setState] = useState(defaultState);
+  const handleCurrentChange = useCallback(event => setState(getValueFromEvent(event, state)), [state]);
+  const updateClick = useCallback(event => setState(addTodo(event, state)), [state]);
   const list = get(listKey, state);
-  underverk.useEffect(() => {
+  useEffect(() => {
     log(list, noop);
   }, [list]);
-  return <><input onChange={handleCurrentChange} value={value} /><button onClick={updateClick}>{submitLabel}</button><ul>{underverk.dynamicNode(TodoItem, list)}</ul></>;
+  return <><input onChange={handleCurrentChange} value={valueKey} /><button onClick={updateClick}>{submitLabel}</button><ul>{dynamicNode(TodoItem, list)}</ul></>;
 };"
 `;
 
 exports[`statefulExample generates 2`] = `
-"const TodoItem = () => {
+"const TodoItem = ({
+  done: done,
+  text: text
+}) => {
   const emptyObject = {};
-  const checkedProps = if(done, emptyObject);
-  return <><li>{text}{underverk.dynamicNode(Checkmark, checkedProps)}</li></>;
+  const theUndefined;
+  const checkedProps = when(done, emptyObject, theUndefined);
+  return <><li>{text}{dynamicNode(Checkmark, checkedProps)}</li></>;
 };"
 `;
 
 exports[`statefulExample generates 3`] = `
-"const Checkmark = () => {
+"const Checkmark = ({}) => {
   const width = 20;
   const height = 20;
   const path = \\"M0,5 L0,5 L5,10 L10,0 Z\\";
   const noneFill = \\"none\\";
   const strokeWidth = \\"1px\\";
-  return <><svg width={width} height={height}><path fill={noneFill} strokeWidth={strokeWidth} d={path} /></svg></>;
+  const stroke = \\"black\\";
+  return <><svg width={width} height={height}><path fill={noneFill} strokeWidth={strokeWidth} stroke={stroke} d={path} /></svg></>;
 };"
 `;
 
@@ -1083,7 +1093,27 @@ Object {
           "directives": Array [],
           "type": "BlockStatement",
         },
-        "params": Array [],
+        "params": Array [
+          Object {
+            "properties": Array [
+              Object {
+                "computed": false,
+                "decorators": null,
+                "key": Object {
+                  "name": "onClick",
+                  "type": "Identifier",
+                },
+                "shorthand": false,
+                "type": "ObjectProperty",
+                "value": Object {
+                  "name": "onClick",
+                  "type": "Identifier",
+                },
+              },
+            ],
+            "type": "ObjectPattern",
+          },
+        ],
         "type": "ArrowFunctionExpression",
       },
       "type": "VariableDeclarator",
@@ -1095,7 +1125,9 @@ Object {
 `;
 
 exports[`staticExample generates 1`] = `
-"const Button = () => {
+"const Button = ({
+  onClick: onClick
+}) => {
   const hello = \\"Hello\\";
   const world = \\"World\\";
   const label = concat(hello, world);

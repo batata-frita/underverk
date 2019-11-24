@@ -22,7 +22,7 @@ export interface Declaration {
 
 export interface Literal {
   name: string
-  value: string | number | boolean | object
+  value: string | number | boolean | object | undefined
 }
 
 export interface Function {
