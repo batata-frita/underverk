@@ -9,7 +9,7 @@ export const Button: Component = {
     { name: 'hello', value: 'Hello' },
     { name: 'world', value: 'World' },
   ],
-  declarations: [
+  compute: [
     {
       name: 'label',
       value: {

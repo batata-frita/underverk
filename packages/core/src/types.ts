@@ -9,13 +9,7 @@ export interface Operation {
   arguments: Expression[]
 }
 
-export interface Function {
-  type: 'function'
-  arguments: Argument[]
-  body: Expression
-}
-
-export type Expression = Operation | Reference | Function
+export type Expression = Operation | Reference
 
 export interface Argument {
   name: string
@@ -29,6 +23,12 @@ export interface Declaration {
 export interface Literal {
   name: string
   value: string | number | boolean
+}
+
+export interface Function {
+  name: string
+  arguments: Argument[]
+  composition: Operation[]
 }
 
 export interface NodeChild {
@@ -59,6 +59,7 @@ export interface Component {
   states: State[]
   effects: Effect[]
   literals: Literal[]
+  functions: Function[]
   declarations: Declaration[]
 }
 
