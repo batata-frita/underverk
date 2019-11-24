@@ -1,0 +1,19 @@
+import { getComponentSources } from '../src'
+import { Input } from './examples/statefulExample'
+
+it('lists all the sources', () => {
+  expect(getComponentSources(Input)).toEqual([
+    { type: 'literal', name: 'valueKey', value: 'value' },
+    { type: 'state', name: 'value' },
+    { type: 'handler', name: 'handleChange' },
+  ])
+})
+
+it('lists all the sinks')
+
+describe('allows adding a source', () => {
+  it('literal')
+  it('state')
+  it('effect')
+  it('dom handler')
+})

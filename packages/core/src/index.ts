@@ -1,6 +1,18 @@
 import * as t from '@babel/types'
 import babelGenerate from '@babel/generator'
-import { Component, State, Expression, Declaration, Effect, Child, Literal } from './types'
+import {
+  Component,
+  State,
+  Expression,
+  Declaration,
+  Effect,
+  Child,
+  Literal,
+  Computed,
+  Reference,
+  Function,
+  UpdateFunction,
+} from './types'
 export * from './types'
 export * from './manipulations'
 
@@ -14,8 +26,9 @@ export const compile = (componentAst: Component): t.VariableDeclaration =>
         [],
         t.blockStatement([
           ...componentAst.literals.map(compileLiteral),
-          ...componentAst.states.map(compileState),
-          ...componentAst.declarations.map(compileDeclaration),
+          ...componentAst.functions.map(compileFunction),
+          ...(componentAst.state ? compileState(componentAst.state) : []),
+          ...componentAst.computed.map(compileComputed),
           ...componentAst.effects.map(compileEffect),
           compileChildren(componentAst.children),
         ]),
@@ -48,12 +61,26 @@ const compileLiteral = (literalAst: Literal): t.VariableDeclaration => {
   }
 }
 
+const compileFunction = (functionAst: Function): t.VariableDeclaration =>
+  t.variableDeclaration('const', [
+    t.variableDeclarator(
+      t.identifier(functionAst.name),
+      t.arrowFunctionExpression(
+        functionAst.arguments.map(argument => t.identifier(argument.name)),
+        compileComposition(functionAst.composition),
+      ),
+    ),
+  ])
+
+const compileComposition = (expressionAst: Expression[]): t.CallExpression =>
+  t.callExpression(t.identifier('compose'), expressionAst.map(compileExpression))
+
 const compileChildren = (childrenAst: Child[]): t.ReturnStatement =>
   t.returnStatement(t.jsxFragment(t.jsxOpeningFragment(), t.jsxClosingFragment(), childrenAst.map(compileChild)))
 
 const compileChild = (childAst: Child): t.JSXElement | t.JSXText | t.JSXExpressionContainer => {
   switch (childAst.type) {
-    case 'node':
+    case 'staticNode':
       const selfClosingTag = childAst.children.length === 0
 
       return t.jsxElement(
@@ -61,6 +88,14 @@ const compileChild = (childAst: Child): t.JSXElement | t.JSXText | t.JSXExpressi
         selfClosingTag ? undefined : t.jsxClosingElement(t.jsxIdentifier(childAst.element)),
         childAst.children.map(compileChild),
         selfClosingTag,
+      )
+
+    case 'dynamicNode':
+      return t.jsxExpressionContainer(
+        t.callExpression(t.identifier('dynamicNode'), [
+          t.identifier(childAst.element),
+          t.identifier(childAst.dependency),
+        ]),
       )
 
     default:
@@ -73,41 +108,37 @@ const compileProp = (propAst: Declaration): t.JSXAttribute =>
 
 const compileEffect = (effectAst: Effect): t.ExpressionStatement =>
   t.expressionStatement(
-    t.callExpression(t.identifier('effect'), [
+    t.callExpression(t.identifier('useEffect'), [
       t.arrowFunctionExpression(
         [],
         t.blockStatement([
           t.expressionStatement(
-            t.callExpression(t.identifier(effectAst.type), effectAst.arguments.map(compileExpression)),
+            t.callExpression(t.identifier(effectAst.type), [
+              t.identifier(effectAst.dependency),
+              t.identifier(effectAst.handler),
+            ]),
           ),
         ]),
       ),
-      t.arrayExpression(effectAst.dependencies.map(dependency => t.identifier(dependency))),
+      t.arrayExpression([t.identifier(effectAst.dependency)]),
     ]),
   )
 
-const compileDeclaration = (declarationAst: Declaration): t.VariableDeclaration =>
+const compileComputed = (computedAst: Computed): t.VariableDeclaration =>
   t.variableDeclaration('const', [
-    t.variableDeclarator(t.identifier(declarationAst.name), compileExpression(declarationAst.value)),
+    t.variableDeclarator(
+      t.identifier(computedAst.name),
+      t.callExpression(t.identifier(computedAst.operation), computedAst.arguments.map(compileReference)),
+    ),
   ])
 
 const compileExpression = (expressionAst: Expression): t.Expression => {
   switch (expressionAst.type) {
-    case 'function':
-      return t.callExpression(t.identifier('callback'), [
-        t.arrowFunctionExpression(
-          expressionAst.arguments.map(argument => t.identifier(argument.name)),
-          compileExpression(expressionAst.body),
-        ),
-        // TODO: resolve the dependencies here
-        t.arrayExpression([]),
-      ])
-
     case 'operation':
       return t.callExpression(t.identifier(expressionAst.name), expressionAst.arguments.map(compileExpression))
 
     case 'reference':
-      return t.identifier(expressionAst.value)
+      return compileReference(expressionAst)
 
     default:
       console.warn('🙈 expression captured by default case', expressionAst)
@@ -115,10 +146,33 @@ const compileExpression = (expressionAst: Expression): t.Expression => {
   }
 }
 
-const compileState = (stateAst: State): t.VariableDeclaration =>
+const compileReference = (referenceAst: Reference): t.Identifier => t.identifier(referenceAst.value)
+
+const compileState = (stateAst: State): t.VariableDeclaration[] => [
   t.variableDeclaration('const', [
     t.variableDeclarator(
-      t.arrayPattern([t.identifier(stateAst.name), t.identifier(stateAst.updateFunction)]),
-      t.callExpression(t.identifier('state'), [compileExpression(stateAst.defaultValue)]),
+      t.arrayPattern([t.identifier('state'), t.identifier('updateState')]),
+      t.callExpression(t.identifier('useState'), [compileExpression(stateAst.defaultValue)]),
+    ),
+  ]),
+  ...stateAst.updateFunctions.map(compileUpdateFunction),
+]
+
+const compileUpdateFunction = (updateFunctionAst: UpdateFunction): t.VariableDeclaration =>
+  t.variableDeclaration('const', [
+    t.variableDeclarator(
+      t.identifier(updateFunctionAst.name),
+      t.callExpression(t.identifier('useCallback'), [
+        t.arrowFunctionExpression(
+          [t.identifier('event')],
+          t.callExpression(t.identifier('setState'), [
+            t.callExpression(t.identifier(updateFunctionAst.transformation), [
+              t.identifier('event'),
+              t.identifier('state'),
+            ]),
+          ]),
+        ),
+        t.arrayExpression([t.identifier('state')]),
+      ]),
     ),
   ])

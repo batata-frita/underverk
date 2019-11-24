@@ -5,7 +5,7 @@ Object {
   "declarations": Array [
     Object {
       "id": Object {
-        "name": "Input",
+        "name": "App",
         "type": "Identifier",
       },
       "init": Object {
@@ -50,7 +50,75 @@ Object {
               "declarations": Array [
                 Object {
                   "id": Object {
-                    "name": "defaultValue",
+                    "name": "listKey",
+                    "type": "Identifier",
+                  },
+                  "init": Object {
+                    "type": "StringLiteral",
+                    "value": "list",
+                  },
+                  "type": "VariableDeclarator",
+                },
+              ],
+              "kind": "const",
+              "type": "VariableDeclaration",
+            },
+            Object {
+              "declarations": Array [
+                Object {
+                  "id": Object {
+                    "name": "currentKey",
+                    "type": "Identifier",
+                  },
+                  "init": Object {
+                    "type": "StringLiteral",
+                    "value": "current",
+                  },
+                  "type": "VariableDeclarator",
+                },
+              ],
+              "kind": "const",
+              "type": "VariableDeclaration",
+            },
+            Object {
+              "declarations": Array [
+                Object {
+                  "id": Object {
+                    "name": "doneKey",
+                    "type": "Identifier",
+                  },
+                  "init": Object {
+                    "type": "StringLiteral",
+                    "value": "done",
+                  },
+                  "type": "VariableDeclarator",
+                },
+              ],
+              "kind": "const",
+              "type": "VariableDeclaration",
+            },
+            Object {
+              "declarations": Array [
+                Object {
+                  "id": Object {
+                    "name": "falseKey",
+                    "type": "Identifier",
+                  },
+                  "init": Object {
+                    "type": "StringLiteral",
+                    "value": "false",
+                  },
+                  "type": "VariableDeclarator",
+                },
+              ],
+              "kind": "const",
+              "type": "VariableDeclaration",
+            },
+            Object {
+              "declarations": Array [
+                Object {
+                  "id": Object {
+                    "name": "defaultCurrent",
                     "type": "Identifier",
                   },
                   "init": Object {
@@ -67,13 +135,338 @@ Object {
               "declarations": Array [
                 Object {
                   "id": Object {
-                    "elements": Array [
+                    "name": "textKey",
+                    "type": "Identifier",
+                  },
+                  "init": Object {
+                    "type": "StringLiteral",
+                    "value": "text",
+                  },
+                  "type": "VariableDeclarator",
+                },
+              ],
+              "kind": "const",
+              "type": "VariableDeclaration",
+            },
+            Object {
+              "declarations": Array [
+                Object {
+                  "id": Object {
+                    "name": "defaultState",
+                    "type": "Identifier",
+                  },
+                  "init": Object {
+                    "type": "StringLiteral",
+                    "value": "[object Object]",
+                  },
+                  "type": "VariableDeclarator",
+                },
+              ],
+              "kind": "const",
+              "type": "VariableDeclaration",
+            },
+            Object {
+              "declarations": Array [
+                Object {
+                  "id": Object {
+                    "name": "submitLabel",
+                    "type": "Identifier",
+                  },
+                  "init": Object {
+                    "type": "StringLiteral",
+                    "value": "Submit",
+                  },
+                  "type": "VariableDeclarator",
+                },
+              ],
+              "kind": "const",
+              "type": "VariableDeclaration",
+            },
+            Object {
+              "declarations": Array [
+                Object {
+                  "id": Object {
+                    "name": "oneKey",
+                    "type": "Identifier",
+                  },
+                  "init": Object {
+                    "type": "NumericLiteral",
+                    "value": 1,
+                  },
+                  "type": "VariableDeclarator",
+                },
+              ],
+              "kind": "const",
+              "type": "VariableDeclaration",
+            },
+            Object {
+              "declarations": Array [
+                Object {
+                  "id": Object {
+                    "name": "zeroKey",
+                    "type": "Identifier",
+                  },
+                  "init": Object {
+                    "type": "NumericLiteral",
+                    "value": 0,
+                  },
+                  "type": "VariableDeclarator",
+                },
+              ],
+              "kind": "const",
+              "type": "VariableDeclaration",
+            },
+            Object {
+              "declarations": Array [
+                Object {
+                  "id": Object {
+                    "name": "getValueFromEvent",
+                    "type": "Identifier",
+                  },
+                  "init": Object {
+                    "async": false,
+                    "body": Object {
+                      "arguments": Array [
+                        Object {
+                          "arguments": Array [
+                            Object {
+                              "name": "currentKey",
+                              "type": "Identifier",
+                            },
+                          ],
+                          "callee": Object {
+                            "name": "objectOf",
+                            "type": "Identifier",
+                          },
+                          "type": "CallExpression",
+                        },
+                        Object {
+                          "arguments": Array [
+                            Object {
+                              "name": "valueKey",
+                              "type": "Identifier",
+                            },
+                          ],
+                          "callee": Object {
+                            "name": "get",
+                            "type": "Identifier",
+                          },
+                          "type": "CallExpression",
+                        },
+                        Object {
+                          "arguments": Array [
+                            Object {
+                              "name": "targetKey",
+                              "type": "Identifier",
+                            },
+                          ],
+                          "callee": Object {
+                            "name": "get",
+                            "type": "Identifier",
+                          },
+                          "type": "CallExpression",
+                        },
+                        Object {
+                          "arguments": Array [
+                            Object {
+                              "name": "oneKey",
+                              "type": "Identifier",
+                            },
+                          ],
+                          "callee": Object {
+                            "name": "nth",
+                            "type": "Identifier",
+                          },
+                          "type": "CallExpression",
+                        },
+                      ],
+                      "callee": Object {
+                        "name": "compose",
+                        "type": "Identifier",
+                      },
+                      "type": "CallExpression",
+                    },
+                    "params": Array [
                       Object {
-                        "name": "value",
+                        "name": "state",
                         "type": "Identifier",
                       },
                       Object {
-                        "name": "setValue",
+                        "name": "event",
+                        "type": "Identifier",
+                      },
+                    ],
+                    "type": "ArrowFunctionExpression",
+                  },
+                  "type": "VariableDeclarator",
+                },
+              ],
+              "kind": "const",
+              "type": "VariableDeclaration",
+            },
+            Object {
+              "declarations": Array [
+                Object {
+                  "id": Object {
+                    "name": "addTodo",
+                    "type": "Identifier",
+                  },
+                  "init": Object {
+                    "async": false,
+                    "body": Object {
+                      "arguments": Array [
+                        Object {
+                          "arguments": Array [
+                            Object {
+                              "name": "listKey",
+                              "type": "Identifier",
+                            },
+                            Object {
+                              "arguments": Array [
+                                Object {
+                                  "arguments": Array [
+                                    Object {
+                                      "name": "doneKey",
+                                      "type": "Identifier",
+                                    },
+                                    Object {
+                                      "name": "falseKey",
+                                      "type": "Identifier",
+                                    },
+                                    Object {
+                                      "arguments": Array [
+                                        Object {
+                                          "name": "textKey",
+                                          "type": "Identifier",
+                                        },
+                                        Object {
+                                          "arguments": Array [
+                                            Object {
+                                              "name": "currentKey",
+                                              "type": "Identifier",
+                                            },
+                                            Object {
+                                              "name": "state",
+                                              "type": "Identifier",
+                                            },
+                                          ],
+                                          "callee": Object {
+                                            "name": "get",
+                                            "type": "Identifier",
+                                          },
+                                          "type": "CallExpression",
+                                        },
+                                      ],
+                                      "callee": Object {
+                                        "name": "objectOf",
+                                        "type": "Identifier",
+                                      },
+                                      "type": "CallExpression",
+                                    },
+                                  ],
+                                  "callee": Object {
+                                    "name": "set",
+                                    "type": "Identifier",
+                                  },
+                                  "type": "CallExpression",
+                                },
+                                Object {
+                                  "arguments": Array [
+                                    Object {
+                                      "name": "listKey",
+                                      "type": "Identifier",
+                                    },
+                                    Object {
+                                      "name": "state",
+                                      "type": "Identifier",
+                                    },
+                                  ],
+                                  "callee": Object {
+                                    "name": "get",
+                                    "type": "Identifier",
+                                  },
+                                  "type": "CallExpression",
+                                },
+                              ],
+                              "callee": Object {
+                                "name": "append",
+                                "type": "Identifier",
+                              },
+                              "type": "CallExpression",
+                            },
+                          ],
+                          "callee": Object {
+                            "name": "set",
+                            "type": "Identifier",
+                          },
+                          "type": "CallExpression",
+                        },
+                        Object {
+                          "arguments": Array [
+                            Object {
+                              "name": "currentKey",
+                              "type": "Identifier",
+                            },
+                            Object {
+                              "name": "defaultCurrent",
+                              "type": "Identifier",
+                            },
+                          ],
+                          "callee": Object {
+                            "name": "set",
+                            "type": "Identifier",
+                          },
+                          "type": "CallExpression",
+                        },
+                        Object {
+                          "arguments": Array [
+                            Object {
+                              "name": "state",
+                              "type": "Identifier",
+                            },
+                          ],
+                          "callee": Object {
+                            "name": "constant",
+                            "type": "Identifier",
+                          },
+                          "type": "CallExpression",
+                        },
+                      ],
+                      "callee": Object {
+                        "name": "compose",
+                        "type": "Identifier",
+                      },
+                      "type": "CallExpression",
+                    },
+                    "params": Array [
+                      Object {
+                        "name": "event",
+                        "type": "Identifier",
+                      },
+                      Object {
+                        "name": "state",
+                        "type": "Identifier",
+                      },
+                    ],
+                    "type": "ArrowFunctionExpression",
+                  },
+                  "type": "VariableDeclarator",
+                },
+              ],
+              "kind": "const",
+              "type": "VariableDeclaration",
+            },
+            Object {
+              "declarations": Array [
+                Object {
+                  "id": Object {
+                    "elements": Array [
+                      Object {
+                        "name": "state",
+                        "type": "Identifier",
+                      },
+                      Object {
+                        "name": "updateState",
                         "type": "Identifier",
                       },
                     ],
@@ -82,12 +475,12 @@ Object {
                   "init": Object {
                     "arguments": Array [
                       Object {
-                        "name": "defaultValue",
+                        "name": "defaultState",
                         "type": "Identifier",
                       },
                     ],
                     "callee": Object {
-                      "name": "state",
+                      "name": "useState",
                       "type": "Identifier",
                     },
                     "type": "CallExpression",
@@ -102,7 +495,7 @@ Object {
               "declarations": Array [
                 Object {
                   "id": Object {
-                    "name": "handleChange",
+                    "name": "handleCurrentChange",
                     "type": "Identifier",
                   },
                   "init": Object {
@@ -114,36 +507,23 @@ Object {
                             Object {
                               "arguments": Array [
                                 Object {
-                                  "name": "valueKey",
+                                  "name": "event",
                                   "type": "Identifier",
                                 },
                                 Object {
-                                  "arguments": Array [
-                                    Object {
-                                      "name": "targetKey",
-                                      "type": "Identifier",
-                                    },
-                                    Object {
-                                      "name": "event",
-                                      "type": "Identifier",
-                                    },
-                                  ],
-                                  "callee": Object {
-                                    "name": "get",
-                                    "type": "Identifier",
-                                  },
-                                  "type": "CallExpression",
+                                  "name": "state",
+                                  "type": "Identifier",
                                 },
                               ],
                               "callee": Object {
-                                "name": "get",
+                                "name": "getValueFromEvent",
                                 "type": "Identifier",
                               },
                               "type": "CallExpression",
                             },
                           ],
                           "callee": Object {
-                            "name": "setValue",
+                            "name": "setState",
                             "type": "Identifier",
                           },
                           "type": "CallExpression",
@@ -157,12 +537,114 @@ Object {
                         "type": "ArrowFunctionExpression",
                       },
                       Object {
-                        "elements": Array [],
+                        "elements": Array [
+                          Object {
+                            "name": "state",
+                            "type": "Identifier",
+                          },
+                        ],
                         "type": "ArrayExpression",
                       },
                     ],
                     "callee": Object {
-                      "name": "callback",
+                      "name": "useCallback",
+                      "type": "Identifier",
+                    },
+                    "type": "CallExpression",
+                  },
+                  "type": "VariableDeclarator",
+                },
+              ],
+              "kind": "const",
+              "type": "VariableDeclaration",
+            },
+            Object {
+              "declarations": Array [
+                Object {
+                  "id": Object {
+                    "name": "updateClick",
+                    "type": "Identifier",
+                  },
+                  "init": Object {
+                    "arguments": Array [
+                      Object {
+                        "async": false,
+                        "body": Object {
+                          "arguments": Array [
+                            Object {
+                              "arguments": Array [
+                                Object {
+                                  "name": "event",
+                                  "type": "Identifier",
+                                },
+                                Object {
+                                  "name": "state",
+                                  "type": "Identifier",
+                                },
+                              ],
+                              "callee": Object {
+                                "name": "addToDo",
+                                "type": "Identifier",
+                              },
+                              "type": "CallExpression",
+                            },
+                          ],
+                          "callee": Object {
+                            "name": "setState",
+                            "type": "Identifier",
+                          },
+                          "type": "CallExpression",
+                        },
+                        "params": Array [
+                          Object {
+                            "name": "event",
+                            "type": "Identifier",
+                          },
+                        ],
+                        "type": "ArrowFunctionExpression",
+                      },
+                      Object {
+                        "elements": Array [
+                          Object {
+                            "name": "state",
+                            "type": "Identifier",
+                          },
+                        ],
+                        "type": "ArrayExpression",
+                      },
+                    ],
+                    "callee": Object {
+                      "name": "useCallback",
+                      "type": "Identifier",
+                    },
+                    "type": "CallExpression",
+                  },
+                  "type": "VariableDeclarator",
+                },
+              ],
+              "kind": "const",
+              "type": "VariableDeclaration",
+            },
+            Object {
+              "declarations": Array [
+                Object {
+                  "id": Object {
+                    "name": "list",
+                    "type": "Identifier",
+                  },
+                  "init": Object {
+                    "arguments": Array [
+                      Object {
+                        "name": "listKey",
+                        "type": "Identifier",
+                      },
+                      Object {
+                        "name": "state",
+                        "type": "Identifier",
+                      },
+                    ],
+                    "callee": Object {
+                      "name": "get",
                       "type": "Identifier",
                     },
                     "type": "CallExpression",
@@ -184,7 +666,11 @@ Object {
                           "expression": Object {
                             "arguments": Array [
                               Object {
-                                "name": "value",
+                                "name": "list",
+                                "type": "Identifier",
+                              },
+                              Object {
+                                "name": "noop",
                                 "type": "Identifier",
                               },
                             ],
@@ -206,7 +692,7 @@ Object {
                   Object {
                     "elements": Array [
                       Object {
-                        "name": "value",
+                        "name": "list",
                         "type": "Identifier",
                       },
                     ],
@@ -214,7 +700,7 @@ Object {
                   },
                 ],
                 "callee": Object {
-                  "name": "effect",
+                  "name": "useEffect",
                   "type": "Identifier",
                 },
                 "type": "CallExpression",
@@ -237,7 +723,7 @@ Object {
                           "type": "JSXAttribute",
                           "value": Object {
                             "expression": Object {
-                              "name": "handleChange",
+                              "name": "handleCurrentChange",
                               "type": "Identifier",
                             },
                             "type": "JSXExpressionContainer",
@@ -268,6 +754,92 @@ Object {
                     "selfClosing": true,
                     "type": "JSXElement",
                   },
+                  Object {
+                    "children": Array [
+                      Object {
+                        "expression": Object {
+                          "name": "submitLabel",
+                          "type": "Identifier",
+                        },
+                        "type": "JSXExpressionContainer",
+                      },
+                    ],
+                    "closingElement": Object {
+                      "name": Object {
+                        "name": "button",
+                        "type": "JSXIdentifier",
+                      },
+                      "type": "JSXClosingElement",
+                    },
+                    "openingElement": Object {
+                      "attributes": Array [
+                        Object {
+                          "name": Object {
+                            "name": "onClick",
+                            "type": "JSXIdentifier",
+                          },
+                          "type": "JSXAttribute",
+                          "value": Object {
+                            "expression": Object {
+                              "name": "handleClick",
+                              "type": "Identifier",
+                            },
+                            "type": "JSXExpressionContainer",
+                          },
+                        },
+                      ],
+                      "name": Object {
+                        "name": "button",
+                        "type": "JSXIdentifier",
+                      },
+                      "selfClosing": false,
+                      "type": "JSXOpeningElement",
+                    },
+                    "selfClosing": false,
+                    "type": "JSXElement",
+                  },
+                  Object {
+                    "children": Array [
+                      Object {
+                        "expression": Object {
+                          "arguments": Array [
+                            Object {
+                              "name": "TodoItem",
+                              "type": "Identifier",
+                            },
+                            Object {
+                              "name": "list",
+                              "type": "Identifier",
+                            },
+                          ],
+                          "callee": Object {
+                            "name": "dynamicNode",
+                            "type": "Identifier",
+                          },
+                          "type": "CallExpression",
+                        },
+                        "type": "JSXExpressionContainer",
+                      },
+                    ],
+                    "closingElement": Object {
+                      "name": Object {
+                        "name": "ul",
+                        "type": "JSXIdentifier",
+                      },
+                      "type": "JSXClosingElement",
+                    },
+                    "openingElement": Object {
+                      "attributes": Array [],
+                      "name": Object {
+                        "name": "ul",
+                        "type": "JSXIdentifier",
+                      },
+                      "selfClosing": false,
+                      "type": "JSXOpeningElement",
+                    },
+                    "selfClosing": false,
+                    "type": "JSXElement",
+                  },
                 ],
                 "closingFragment": Object {
                   "type": "JSXClosingFragment",
@@ -295,16 +867,32 @@ Object {
 `;
 
 exports[`statefulExample generates 1`] = `
-"const Input = () => {
+"const App = () => {
   const valueKey = \\"value\\";
   const targetKey = \\"target\\";
-  const defaultValue = \\"\\";
-  const [value, setValue] = state(defaultValue);
-  const handleChange = callback(event => setValue(get(valueKey, get(targetKey, event))), []);
-  effect(() => {
-    log(value);
-  }, [value]);
-  return <><input onChange={handleChange} value={value} /></>;
+  const listKey = \\"list\\";
+  const currentKey = \\"current\\";
+  const doneKey = \\"done\\";
+  const falseKey = \\"false\\";
+  const defaultCurrent = \\"\\";
+  const textKey = \\"text\\";
+  const defaultState = \\"[object Object]\\";
+  const submitLabel = \\"Submit\\";
+  const oneKey = 1;
+  const zeroKey = 0;
+
+  const getValueFromEvent = (state, event) => compose(objectOf(currentKey), get(valueKey), get(targetKey), nth(oneKey));
+
+  const addTodo = (event, state) => compose(set(listKey, append(set(doneKey, falseKey, objectOf(textKey, get(currentKey, state))), get(listKey, state))), set(currentKey, defaultCurrent), constant(state));
+
+  const [state, updateState] = useState(defaultState);
+  const handleCurrentChange = useCallback(event => setState(getValueFromEvent(event, state)), [state]);
+  const updateClick = useCallback(event => setState(addToDo(event, state)), [state]);
+  const list = get(listKey, state);
+  useEffect(() => {
+    log(list, noop);
+  }, [list]);
+  return <><input onChange={handleCurrentChange} value={value} /><button onClick={handleClick}>{submitLabel}</button><ul>{dynamicNode(TodoItem, list)}</ul></>;
 };"
 `;
 

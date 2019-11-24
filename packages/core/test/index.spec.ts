@@ -1,14 +1,14 @@
 import { compile, generate } from '../src'
-import { Input } from './examples/statefulExample'
+import { App } from './examples/todoExample'
 import { Button } from './examples/staticExample'
 
 describe('statefulExample', () => {
   it('compiles', () => {
-    expect(compile(Input)).toMatchSnapshot()
+    expect(compile(App)).toMatchSnapshot()
   })
 
   it('generates', () => {
-    expect(generate(compile(Input))).toMatchSnapshot()
+    expect(generate(compile(App))).toMatchSnapshot()
   })
 })
 

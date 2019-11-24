@@ -3,28 +3,25 @@ import { Project, Component } from '../../src/types'
 export const Button: Component = {
   name: 'Button',
   props: [{ name: 'onClick' }],
-  states: [],
-  effects: [],
   literals: [
     { name: 'hello', value: 'Hello' },
     { name: 'world', value: 'World' },
   ],
-  compute: [
+  functions: [],
+  computed: [
     {
       name: 'label',
-      value: {
-        type: 'operation',
-        name: 'concat',
-        arguments: [
-          { type: 'reference', value: 'hello' },
-          { type: 'reference', value: 'world' },
-        ],
-      },
+      operation: 'concat',
+      arguments: [
+        { type: 'reference', value: 'hello' },
+        { type: 'reference', value: 'world' },
+      ],
     },
   ],
+  effects: [],
   children: [
     {
-      type: 'node',
+      type: 'staticNode',
       element: 'div',
       props: [],
       children: [{ type: 'reference', value: 'label' }],

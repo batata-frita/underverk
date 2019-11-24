@@ -17,7 +17,7 @@ export interface Argument {
 
 export interface Declaration {
   name: string
-  value: Expression
+  value: Reference
 }
 
 export interface Literal {
@@ -44,7 +44,7 @@ export interface DynamicNodeChild {
   dependency: string
 }
 
-export type Child = StaticNodeChild | DynamicNodeChild | Expression
+export type Child = StaticNodeChild | DynamicNodeChild | Reference
 
 export interface UpdateFunction {
   name: string
