@@ -1,4 +1,4 @@
-import { Component, Project } from '../../src/types'
+import { Component, Project, Context } from '../../src'
 
 export const App: Component = {
   name: 'App',
@@ -14,11 +14,13 @@ export const App: Component = {
     { name: 'textKey', value: 'text' },
     { name: 'defaultState', value: { list: [], current: '' } },
     { name: 'submitLabel', value: 'Submit' },
+    { name: 'theme', value: { textColor: 'red' } },
   ],
+  getContexts: [],
   functions: [
     {
       name: 'getValueFromEvent',
-      arguments: [{ name: 'state' }, { name: 'event' }],
+      arguments: [{ name: 'event' }, { name: 'state' }],
       composition: [
         { type: 'operation', name: 'objectOf', arguments: [{ type: 'reference', value: 'currentKey' }] },
         { type: 'operation', name: 'get', arguments: [{ type: 'reference', value: 'valueKey' }] },
@@ -106,6 +108,14 @@ export const App: Component = {
         { type: 'reference', value: 'state' },
       ],
     },
+    {
+      name: 'value',
+      operation: 'get',
+      arguments: [
+        { type: 'reference', value: 'currentKey' },
+        { type: 'reference', value: 'state' },
+      ],
+    },
   ],
 
   effects: [
@@ -116,13 +126,20 @@ export const App: Component = {
     },
   ],
 
+  setContexts: [
+    {
+      context: 'Theme',
+      value: 'theme',
+    },
+  ],
+
   children: [
     {
       type: 'staticNode',
       element: 'input',
       props: [
         { name: 'onChange', value: { type: 'reference', value: 'handleCurrentChange' } },
-        { name: 'value', value: { type: 'reference', value: 'valueKey' } },
+        { name: 'value', value: { type: 'reference', value: 'value' } },
       ],
       children: [],
     },
@@ -166,6 +183,20 @@ export const TodoItem: Component = {
       name: 'theUndefined',
       value: undefined,
     },
+    {
+      name: 'textColorKey',
+      value: 'textColor',
+    },
+    {
+      name: 'colorKey',
+      value: 'color',
+    },
+  ],
+  getContexts: [
+    {
+      name: 'theme',
+      context: 'Theme',
+    },
   ],
   functions: [],
   computed: [
@@ -187,13 +218,47 @@ export const TodoItem: Component = {
         },
       ],
     },
+    {
+      name: 'textColor',
+      operation: 'get',
+      arguments: [
+        {
+          type: 'reference',
+          value: 'textColorKey',
+        },
+        {
+          type: 'reference',
+          value: 'theme',
+        },
+      ],
+    },
+    {
+      name: 'style',
+      operation: 'objectOf',
+      arguments: [
+        {
+          type: 'reference',
+          value: 'colorKey',
+        },
+        {
+          type: 'reference',
+          value: 'textColor',
+        },
+      ],
+    },
   ],
   effects: [],
+  setContexts: [],
   children: [
     {
       type: 'staticNode',
       element: 'li',
-      props: [],
+      props: [
+        {
+          name: 'style',
+          value: { type: 'reference', value: 'style' },
+        },
+      ],
       children: [
         {
           type: 'reference',
@@ -220,9 +285,11 @@ export const Checkmark: Component = {
     { name: 'strokeWidth', value: '1px' },
     { name: 'stroke', value: 'black' },
   ],
+  getContexts: [],
   functions: [],
   computed: [],
   effects: [],
+  setContexts: [],
   children: [
     {
       type: 'staticNode',
@@ -278,7 +345,15 @@ export const Checkmark: Component = {
   ],
 }
 
+const Theme: Context = {
+  name: 'Theme',
+  defaultValue: {
+    textColor: 'green',
+  },
+}
+
 export const project: Project = {
   name: 'Todo',
   components: [App, TodoItem, Checkmark],
+  contexts: [Theme],
 }

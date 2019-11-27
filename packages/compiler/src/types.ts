@@ -20,9 +20,21 @@ export interface Declaration {
   value: Reference
 }
 
+export interface ContextGetter {
+  name: string
+  context: string
+}
+
+export interface ContextSetter {
+  context: string
+  value: string
+}
+
+export type LiteralValue = string | number | boolean | object | undefined
+
 export interface Literal {
   name: string
-  value: string | number | boolean | object | undefined
+  value: LiteralValue
 }
 
 export interface Function {
@@ -75,15 +87,25 @@ export interface Component {
   props: Argument[]
 
   literals: Literal[]
+  getContexts: ContextGetter[]
   functions: Function[]
   state?: State
   computed: Computed[]
 
   effects: Effect[]
+  setContexts: ContextSetter[]
   children: Child[]
+}
+
+export interface Context {
+  name: string
+  defaultValue: LiteralValue
 }
 
 export interface Project {
   name: string
   components: Component[]
+  contexts: Context[]
 }
+
+export type ReferenceType = 'literal' | 'prop' | 'computed' | 'function' | 'updateFunction' | 'argument'
