@@ -7,6 +7,7 @@ export const Button: Component = {
     { name: 'hello', value: 'Hello' },
     { name: 'world', value: 'World' },
   ],
+  getContexts: [],
   functions: [],
   computed: [
     {
@@ -19,6 +20,7 @@ export const Button: Component = {
     },
   ],
   effects: [],
+  setContexts: [],
   children: [
     {
       type: 'staticNode',
@@ -32,4 +34,5 @@ export const Button: Component = {
 export const project: Project = {
   name: 'My components',
   components: [Button],
+  contexts: [],
 }

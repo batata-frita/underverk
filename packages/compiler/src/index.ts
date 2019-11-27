@@ -14,13 +14,25 @@ import {
   Function,
   UpdateFunction,
   Argument,
+  Context,
+  LiteralValue,
+  ContextGetter,
+  ContextSetter,
 } from './types'
 export * from './types'
 export * from './manipulations'
 
 export const generate = (ast: t.VariableDeclaration): string => babelGenerate(ast).code
 
-export const compile = (componentAst: Component): t.VariableDeclaration =>
+export const compileContext = (contextAst: Context): t.VariableDeclaration =>
+  t.variableDeclaration('const', [
+    t.variableDeclarator(
+      t.identifier(contextAst.name),
+      t.callExpression(t.identifier('createContext'), [compileLiteralValue(contextAst.defaultValue)]),
+    ),
+  ])
+
+export const compileComponent = (componentAst: Component): t.VariableDeclaration =>
   t.variableDeclaration('const', [
     t.variableDeclarator(
       t.identifier(componentAst.name),
@@ -28,49 +40,75 @@ export const compile = (componentAst: Component): t.VariableDeclaration =>
         [compileProps(componentAst.props)],
         t.blockStatement([
           ...componentAst.literals.map(compileLiteral),
+          ...componentAst.getContexts.map(compileGetContext),
           ...componentAst.functions.map(compileFunction(componentAst.props)),
           ...(componentAst.state ? compileState(componentAst.state) : []),
           ...componentAst.computed.map(compileComputed),
           ...componentAst.effects.map(compileEffect),
-          compileChildren(componentAst.children),
+          t.returnStatement(compileSetContexts(componentAst.setContexts, compileChildren(componentAst.children))),
         ]),
       ),
     ),
   ])
 
+const compileGetContext = (getContextAst: ContextGetter): t.VariableDeclaration =>
+  t.variableDeclaration('const', [
+    t.variableDeclarator(
+      t.identifier(getContextAst.name),
+      t.callExpression(t.identifier('useContext'), [t.identifier(getContextAst.context)]),
+    ),
+  ])
+
+const compileSetContexts = (
+  setContextsAst: ContextSetter[],
+  children: t.JSXElement | t.JSXFragment,
+): t.JSXElement | t.JSXFragment => {
+  if (setContextsAst.length === 0) {
+    return children
+  }
+
+  const [head, ...tail] = setContextsAst
+  return compileSetContexts(
+    tail,
+    t.jsxElement(
+      t.jsxOpeningElement(t.jsxIdentifier(`${head.context}.Provider`), [
+        t.jsxAttribute(t.jsxIdentifier('value'), t.jsxExpressionContainer(t.identifier(head.value))),
+      ]),
+      t.jsxClosingElement(t.jsxIdentifier(`${head.context}.Provider`)),
+      [children],
+      false,
+    ),
+  )
+}
+
 const compileProps = (propsAst: Argument[]): t.ObjectPattern =>
   t.objectPattern(propsAst.map(prop => t.objectProperty(t.identifier(prop.name), t.identifier(prop.name))))
 
-const compileLiteral = (literalAst: Literal): t.VariableDeclaration => {
-  switch (typeof literalAst.value) {
+const compileLiteral = (literalAst: Literal): t.VariableDeclaration =>
+  t.variableDeclaration('const', [
+    t.variableDeclarator(t.identifier(literalAst.name), compileLiteralValue(literalAst.value)),
+  ])
+
+const compileLiteralValue = (literalValue: LiteralValue): t.Expression => {
+  switch (typeof literalValue) {
     case 'string':
-      return t.variableDeclaration('const', [
-        t.variableDeclarator(t.identifier(literalAst.name), t.stringLiteral(literalAst.value)),
-      ])
+      return t.stringLiteral(literalValue)
 
     case 'boolean':
-      return t.variableDeclaration('const', [
-        t.variableDeclarator(t.identifier(literalAst.name), t.booleanLiteral(literalAst.value)),
-      ])
+      return t.booleanLiteral(literalValue)
 
     case 'number':
-      return t.variableDeclaration('const', [
-        t.variableDeclarator(t.identifier(literalAst.name), t.numericLiteral(literalAst.value)),
-      ])
+      return t.numericLiteral(literalValue)
 
     case 'object':
-      return t.variableDeclaration('const', [
-        t.variableDeclarator(t.identifier(literalAst.name), template.expression(JSON.stringify(literalAst.value))()),
-      ])
+      return template.expression(JSON.stringify(literalValue))()
 
     case 'undefined':
-      return t.variableDeclaration('let', [t.variableDeclarator(t.identifier(literalAst.name))])
+      return t.identifier('undefined')
 
     default:
-      console.warn('🙈 literal captured by default case', literalAst)
-      return t.variableDeclaration('const', [
-        t.variableDeclarator(t.identifier(literalAst.name), t.stringLiteral(`${literalAst.value}`)),
-      ])
+      console.warn('🙈 literal captured by default case', literalValue)
+      return t.stringLiteral(`${literalValue}`)
   }
 }
 
@@ -93,8 +131,8 @@ const compileComposition = (expressionAst: Expression[]): t.CallExpression =>
     t.identifier('event'),
   ])
 
-const compileChildren = (childrenAst: Child[]): t.ReturnStatement =>
-  t.returnStatement(t.jsxFragment(t.jsxOpeningFragment(), t.jsxClosingFragment(), childrenAst.map(compileChild)))
+const compileChildren = (childrenAst: Child[]): t.JSXFragment =>
+  t.jsxFragment(t.jsxOpeningFragment(), t.jsxClosingFragment(), childrenAst.map(compileChild))
 
 const compileChild = (childAst: Child): t.JSXElement | t.JSXText | t.JSXExpressionContainer => {
   switch (childAst.type) {

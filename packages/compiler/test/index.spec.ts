@@ -1,25 +1,26 @@
-import { compile, generate } from '../src'
-import { App, TodoItem, Checkmark } from './examples/todoExample'
+import { compileComponent, generate, compileContext } from '../src'
+import { App, TodoItem, Checkmark, Theme } from './examples/todoExample'
 import { Button } from './examples/staticExample'
 
 describe('statefulExample', () => {
   it('compiles', () => {
-    expect(compile(App)).toMatchSnapshot()
+    expect(compileComponent(App)).toMatchSnapshot()
   })
 
   it('generates', () => {
-    expect(generate(compile(App))).toMatchSnapshot()
-    expect(generate(compile(TodoItem))).toMatchSnapshot()
-    expect(generate(compile(Checkmark))).toMatchSnapshot()
+    expect(generate(compileComponent(App))).toMatchSnapshot()
+    expect(generate(compileComponent(TodoItem))).toMatchSnapshot()
+    expect(generate(compileComponent(Checkmark))).toMatchSnapshot()
+    expect(generate(compileContext(Theme))).toMatchSnapshot()
   })
 })
 
 describe('staticExample', () => {
   it('compiles', () => {
-    expect(compile(Button)).toMatchSnapshot()
+    expect(compileComponent(Button)).toMatchSnapshot()
   })
 
   it('generates', () => {
-    expect(generate(compile(Button))).toMatchSnapshot()
+    expect(generate(compileComponent(Button))).toMatchSnapshot()
   })
 })

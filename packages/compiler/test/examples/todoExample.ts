@@ -345,7 +345,7 @@ export const Checkmark: Component = {
   ],
 }
 
-const Theme: Context = {
+export const Theme: Context = {
   name: 'Theme',
   defaultValue: {
     textColor: 'green',

@@ -236,6 +236,53 @@ Object {
               "declarations": Array [
                 Object {
                   "id": Object {
+                    "name": "theme",
+                    "type": "Identifier",
+                  },
+                  "init": Object {
+                    "extra": Object {
+                      "parenStart": 0,
+                      "parenthesized": true,
+                    },
+                    "loc": undefined,
+                    "properties": Array [
+                      Object {
+                        "computed": false,
+                        "key": Object {
+                          "extra": Object {
+                            "raw": "\\"textColor\\"",
+                            "rawValue": "textColor",
+                          },
+                          "loc": undefined,
+                          "type": "StringLiteral",
+                          "value": "textColor",
+                        },
+                        "loc": undefined,
+                        "shorthand": false,
+                        "type": "ObjectProperty",
+                        "value": Object {
+                          "extra": Object {
+                            "raw": "\\"red\\"",
+                            "rawValue": "red",
+                          },
+                          "loc": undefined,
+                          "type": "StringLiteral",
+                          "value": "red",
+                        },
+                      },
+                    ],
+                    "type": "ObjectExpression",
+                  },
+                  "type": "VariableDeclarator",
+                },
+              ],
+              "kind": "const",
+              "type": "VariableDeclaration",
+            },
+            Object {
+              "declarations": Array [
+                Object {
+                  "id": Object {
                     "name": "getValueFromEvent",
                     "type": "Identifier",
                   },
@@ -302,11 +349,11 @@ Object {
                         },
                         "params": Array [
                           Object {
-                            "name": "state",
+                            "name": "event",
                             "type": "Identifier",
                           },
                           Object {
-                            "name": "event",
+                            "name": "state",
                             "type": "Identifier",
                           },
                         ],
@@ -741,6 +788,36 @@ Object {
               "type": "VariableDeclaration",
             },
             Object {
+              "declarations": Array [
+                Object {
+                  "id": Object {
+                    "name": "value",
+                    "type": "Identifier",
+                  },
+                  "init": Object {
+                    "arguments": Array [
+                      Object {
+                        "name": "currentKey",
+                        "type": "Identifier",
+                      },
+                      Object {
+                        "name": "state",
+                        "type": "Identifier",
+                      },
+                    ],
+                    "callee": Object {
+                      "name": "get",
+                      "type": "Identifier",
+                    },
+                    "type": "CallExpression",
+                  },
+                  "type": "VariableDeclarator",
+                },
+              ],
+              "kind": "const",
+              "type": "VariableDeclaration",
+            },
+            Object {
               "expression": Object {
                 "arguments": Array [
                   Object {
@@ -796,143 +873,180 @@ Object {
               "argument": Object {
                 "children": Array [
                   Object {
-                    "children": Array [],
-                    "closingElement": null,
-                    "openingElement": Object {
-                      "attributes": Array [
-                        Object {
-                          "name": Object {
-                            "name": "onChange",
-                            "type": "JSXIdentifier",
-                          },
-                          "type": "JSXAttribute",
-                          "value": Object {
-                            "expression": Object {
-                              "name": "handleCurrentChange",
-                              "type": "Identifier",
-                            },
-                            "type": "JSXExpressionContainer",
-                          },
-                        },
-                        Object {
-                          "name": Object {
-                            "name": "value",
-                            "type": "JSXIdentifier",
-                          },
-                          "type": "JSXAttribute",
-                          "value": Object {
-                            "expression": Object {
-                              "name": "valueKey",
-                              "type": "Identifier",
-                            },
-                            "type": "JSXExpressionContainer",
-                          },
-                        },
-                      ],
-                      "name": Object {
-                        "name": "input",
-                        "type": "JSXIdentifier",
-                      },
-                      "selfClosing": true,
-                      "type": "JSXOpeningElement",
-                    },
-                    "selfClosing": true,
-                    "type": "JSXElement",
-                  },
-                  Object {
                     "children": Array [
                       Object {
+                        "children": Array [],
+                        "closingElement": null,
+                        "openingElement": Object {
+                          "attributes": Array [
+                            Object {
+                              "name": Object {
+                                "name": "onChange",
+                                "type": "JSXIdentifier",
+                              },
+                              "type": "JSXAttribute",
+                              "value": Object {
+                                "expression": Object {
+                                  "name": "handleCurrentChange",
+                                  "type": "Identifier",
+                                },
+                                "type": "JSXExpressionContainer",
+                              },
+                            },
+                            Object {
+                              "name": Object {
+                                "name": "value",
+                                "type": "JSXIdentifier",
+                              },
+                              "type": "JSXAttribute",
+                              "value": Object {
+                                "expression": Object {
+                                  "name": "value",
+                                  "type": "Identifier",
+                                },
+                                "type": "JSXExpressionContainer",
+                              },
+                            },
+                          ],
+                          "name": Object {
+                            "name": "input",
+                            "type": "JSXIdentifier",
+                          },
+                          "selfClosing": true,
+                          "type": "JSXOpeningElement",
+                        },
+                        "selfClosing": true,
+                        "type": "JSXElement",
+                      },
+                      Object {
+                        "children": Array [
+                          Object {
+                            "expression": Object {
+                              "name": "submitLabel",
+                              "type": "Identifier",
+                            },
+                            "type": "JSXExpressionContainer",
+                          },
+                        ],
+                        "closingElement": Object {
+                          "name": Object {
+                            "name": "button",
+                            "type": "JSXIdentifier",
+                          },
+                          "type": "JSXClosingElement",
+                        },
+                        "openingElement": Object {
+                          "attributes": Array [
+                            Object {
+                              "name": Object {
+                                "name": "onClick",
+                                "type": "JSXIdentifier",
+                              },
+                              "type": "JSXAttribute",
+                              "value": Object {
+                                "expression": Object {
+                                  "name": "updateClick",
+                                  "type": "Identifier",
+                                },
+                                "type": "JSXExpressionContainer",
+                              },
+                            },
+                          ],
+                          "name": Object {
+                            "name": "button",
+                            "type": "JSXIdentifier",
+                          },
+                          "selfClosing": false,
+                          "type": "JSXOpeningElement",
+                        },
+                        "selfClosing": false,
+                        "type": "JSXElement",
+                      },
+                      Object {
+                        "children": Array [
+                          Object {
+                            "expression": Object {
+                              "arguments": Array [
+                                Object {
+                                  "name": "TodoItem",
+                                  "type": "Identifier",
+                                },
+                                Object {
+                                  "name": "list",
+                                  "type": "Identifier",
+                                },
+                              ],
+                              "callee": Object {
+                                "name": "dynamicNode",
+                                "type": "Identifier",
+                              },
+                              "type": "CallExpression",
+                            },
+                            "type": "JSXExpressionContainer",
+                          },
+                        ],
+                        "closingElement": Object {
+                          "name": Object {
+                            "name": "ul",
+                            "type": "JSXIdentifier",
+                          },
+                          "type": "JSXClosingElement",
+                        },
+                        "openingElement": Object {
+                          "attributes": Array [],
+                          "name": Object {
+                            "name": "ul",
+                            "type": "JSXIdentifier",
+                          },
+                          "selfClosing": false,
+                          "type": "JSXOpeningElement",
+                        },
+                        "selfClosing": false,
+                        "type": "JSXElement",
+                      },
+                    ],
+                    "closingFragment": Object {
+                      "type": "JSXClosingFragment",
+                    },
+                    "openingFragment": Object {
+                      "type": "JSXOpeningFragment",
+                    },
+                    "type": "JSXFragment",
+                  },
+                ],
+                "closingElement": Object {
+                  "name": Object {
+                    "name": "Theme.Provider",
+                    "type": "JSXIdentifier",
+                  },
+                  "type": "JSXClosingElement",
+                },
+                "openingElement": Object {
+                  "attributes": Array [
+                    Object {
+                      "name": Object {
+                        "name": "value",
+                        "type": "JSXIdentifier",
+                      },
+                      "type": "JSXAttribute",
+                      "value": Object {
                         "expression": Object {
-                          "name": "submitLabel",
+                          "name": "theme",
                           "type": "Identifier",
                         },
                         "type": "JSXExpressionContainer",
                       },
-                    ],
-                    "closingElement": Object {
-                      "name": Object {
-                        "name": "button",
-                        "type": "JSXIdentifier",
-                      },
-                      "type": "JSXClosingElement",
                     },
-                    "openingElement": Object {
-                      "attributes": Array [
-                        Object {
-                          "name": Object {
-                            "name": "onClick",
-                            "type": "JSXIdentifier",
-                          },
-                          "type": "JSXAttribute",
-                          "value": Object {
-                            "expression": Object {
-                              "name": "updateClick",
-                              "type": "Identifier",
-                            },
-                            "type": "JSXExpressionContainer",
-                          },
-                        },
-                      ],
-                      "name": Object {
-                        "name": "button",
-                        "type": "JSXIdentifier",
-                      },
-                      "selfClosing": false,
-                      "type": "JSXOpeningElement",
-                    },
-                    "selfClosing": false,
-                    "type": "JSXElement",
+                  ],
+                  "name": Object {
+                    "name": "Theme.Provider",
+                    "type": "JSXIdentifier",
                   },
-                  Object {
-                    "children": Array [
-                      Object {
-                        "expression": Object {
-                          "arguments": Array [
-                            Object {
-                              "name": "TodoItem",
-                              "type": "Identifier",
-                            },
-                            Object {
-                              "name": "list",
-                              "type": "Identifier",
-                            },
-                          ],
-                          "callee": Object {
-                            "name": "dynamicNode",
-                            "type": "Identifier",
-                          },
-                          "type": "CallExpression",
-                        },
-                        "type": "JSXExpressionContainer",
-                      },
-                    ],
-                    "closingElement": Object {
-                      "name": Object {
-                        "name": "ul",
-                        "type": "JSXIdentifier",
-                      },
-                      "type": "JSXClosingElement",
-                    },
-                    "openingElement": Object {
-                      "attributes": Array [],
-                      "name": Object {
-                        "name": "ul",
-                        "type": "JSXIdentifier",
-                      },
-                      "selfClosing": false,
-                      "type": "JSXOpeningElement",
-                    },
-                    "selfClosing": false,
-                    "type": "JSXElement",
-                  },
-                ],
-                "closingFragment": Object {
-                  "type": "JSXClosingFragment",
+                  "selfClosing": false,
+                  "type": "JSXOpeningElement",
                 },
-                "openingFragment": Object {
-                  "type": "JSXOpeningFragment",
-                },
-                "type": "JSXFragment",
+                "selfClosing": false,
+                "type": "JSXElement",
               },
               "type": "ReturnStatement",
             },
@@ -971,7 +1085,10 @@ exports[`statefulExample generates 1`] = `
     \\"current\\": \\"\\"
   };
   const submitLabel = \\"Submit\\";
-  const getValueFromEvent = useCallback((state, event) => compose(objectOf(currentKey), get(valueKey), get(targetKey))(event), []);
+  const theme = {
+    \\"textColor\\": \\"red\\"
+  };
+  const getValueFromEvent = useCallback((event, state) => compose(objectOf(currentKey), get(valueKey), get(targetKey))(event), []);
   const addTodo = useCallback((event, state) => compose(set(listKey, append(set(doneKey, falseKey, objectOf(textKey, get(currentKey, state))), get(listKey, state))), set(currentKey, defaultCurrent), constant(state))(event), []);
   const [state, setState] = useState(defaultState);
   const handleCurrentChange = useCallback(event => setState({ ...state,
@@ -981,10 +1098,11 @@ exports[`statefulExample generates 1`] = `
     ...addTodo(event, state)
   }), [state, addTodo]);
   const list = get(listKey, state);
+  const value = get(currentKey, state);
   useEffect(() => {
     log(list, noop);
   }, [list]);
-  return <><input onChange={handleCurrentChange} value={valueKey} /><button onClick={updateClick}>{submitLabel}</button><ul>{dynamicNode(TodoItem, list)}</ul></>;
+  return <Theme.Provider value={theme}><><input onChange={handleCurrentChange} value={value} /><button onClick={updateClick}>{submitLabel}</button><ul>{dynamicNode(TodoItem, list)}</ul></></Theme.Provider>;
 };"
 `;
 
@@ -994,9 +1112,14 @@ exports[`statefulExample generates 2`] = `
   text: text
 }) => {
   const emptyObject = {};
-  let theUndefined;
+  const theUndefined = undefined;
+  const textColorKey = \\"textColor\\";
+  const colorKey = \\"color\\";
+  const theme = useContext(Theme);
   const checkedProps = when(done, emptyObject, theUndefined);
-  return <><li>{text}{dynamicNode(Checkmark, checkedProps)}</li></>;
+  const textColor = get(textColorKey, theme);
+  const style = objectOf(colorKey, textColor);
+  return <><li style={style}>{text}{dynamicNode(Checkmark, checkedProps)}</li></>;
 };"
 `;
 
@@ -1010,6 +1133,12 @@ exports[`statefulExample generates 3`] = `
   const stroke = \\"black\\";
   return <><svg width={width} height={height}><path fill={noneFill} strokeWidth={strokeWidth} stroke={stroke} d={path} /></svg></>;
 };"
+`;
+
+exports[`statefulExample generates 4`] = `
+"const Theme = createContext({
+  \\"textColor\\": \\"green\\"
+});"
 `;
 
 exports[`staticExample compiles 1`] = `
