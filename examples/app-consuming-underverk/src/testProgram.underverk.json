@@ -6,38 +6,120 @@
       "name": "App",
       "props": [],
       "literals": [
-        { "name": "valueKey", "value": "value" },
-        { "name": "targetKey", "value": "target" },
-        { "name": "listKey", "value": "list" },
-        { "name": "currentKey", "value": "current" },
-        { "name": "doneKey", "value": "done" },
-        { "name": "falseKey", "value": "false" },
-        { "name": "defaultCurrent", "value": "" },
-        { "name": "textKey", "value": "text" },
-        { "name": "defaultState", "value": { "list": [], "current": "" } },
-        { "name": "submitLabel", "value": "Submit" },
-        { "name": "theme", "value": { "textColor": "red" } }
+        {
+          "name": "valueKey",
+          "value": "value"
+        },
+        {
+          "name": "targetKey",
+          "value": "target"
+        },
+        {
+          "name": "listKey",
+          "value": "list"
+        },
+        {
+          "name": "currentKey",
+          "value": "current"
+        },
+        {
+          "name": "doneKey",
+          "value": "done"
+        },
+        {
+          "name": "falseKey",
+          "value": "false"
+        },
+        {
+          "name": "defaultCurrent",
+          "value": ""
+        },
+        {
+          "name": "textKey",
+          "value": "text"
+        },
+        {
+          "name": "defaultState",
+          "value": {
+            "list": [],
+            "current": ""
+          }
+        },
+        {
+          "name": "submitLabel",
+          "value": "batata"
+        },
+        {
+          "name": "theme",
+          "value": {
+            "textColor": "red"
+          }
+        }
       ],
       "getContexts": [],
       "functions": [
         {
           "name": "getValueFromEvent",
-          "arguments": [{ "name": "event" }, { "name": "state" }],
+          "arguments": [
+            {
+              "name": "event"
+            },
+            {
+              "name": "state"
+            }
+          ],
           "composition": [
-            { "type": "operation", "name": "objectOf", "arguments": [{ "type": "reference", "value": "currentKey" }] },
-            { "type": "operation", "name": "get", "arguments": [{ "type": "reference", "value": "valueKey" }] },
-            { "type": "operation", "name": "get", "arguments": [{ "type": "reference", "value": "targetKey" }] }
+            {
+              "type": "operation",
+              "name": "objectOf",
+              "arguments": [
+                {
+                  "type": "reference",
+                  "value": "currentKey"
+                }
+              ]
+            },
+            {
+              "type": "operation",
+              "name": "get",
+              "arguments": [
+                {
+                  "type": "reference",
+                  "value": "valueKey"
+                }
+              ]
+            },
+            {
+              "type": "operation",
+              "name": "get",
+              "arguments": [
+                {
+                  "type": "reference",
+                  "value": "targetKey"
+                }
+              ]
+            }
           ]
         },
         {
           "name": "addTodo",
-          "arguments": [{ "name": "event" }, { "name": "state" }],
+          "arguments": [
+            {
+              "name": "event"
+            },
+            {
+              "name": "state"
+            }
+          ],
           "composition": [
             {
               "type": "operation",
               "name": "set",
               "arguments": [
-                { "type": "reference", "value": "listKey" },
+                {
+                  "type": "reference",
+                  "value": "listKey"
+                },
                 {
                   "type": "operation",
                   "name": "append",
@@ -46,8 +128,14 @@
                       "type": "operation",
                       "name": "set",
                       "arguments": [
-                        { "type": "reference", "value": "doneKey" },
-                        { "type": "reference", "value": "falseKey" },
+                        {
+                          "type": "reference",
+                          "value": "doneKey"
+                        },
+                        {
+                          "type": "reference",
+                          "value": "falseKey"
+                        },
                         {
                           "type": "operation",
                           "name": "objectOf",
@@ -60,8 +148,14 @@
                               "type": "operation",
                               "name": "get",
                               "arguments": [
-                                { "type": "reference", "value": "currentKey" },
-                                { "type": "reference", "value": "state" }
+                                {
+                                  "type": "reference",
+                                  "value": "currentKey"
+                                },
+                                {
+                                  "type": "reference",
+                                  "value": "state"
+                                }
                               ]
                             }
                           ]
@@ -72,8 +166,14 @@
                       "type": "operation",
                       "name": "get",
                       "arguments": [
-                        { "type": "reference", "value": "listKey" },
-                        { "type": "reference", "value": "state" }
+                        {
+                          "type": "reference",
+                          "value": "listKey"
+                        },
+                        {
+                          "type": "reference",
+                          "value": "state"
+                        }
                       ]
                     }
                   ]
@@ -84,42 +184,75 @@
               "type": "operation",
               "name": "set",
               "arguments": [
-                { "type": "reference", "value": "currentKey" },
-                { "type": "reference", "value": "defaultCurrent" }
+                {
+                  "type": "reference",
+                  "value": "currentKey"
+                },
+                {
+                  "type": "reference",
+                  "value": "defaultCurrent"
+                }
               ]
             },
-            { "type": "operation", "name": "constant", "arguments": [{ "type": "reference", "value": "state" }] }
+            {
+              "type": "operation",
+              "name": "constant",
+              "arguments": [
+                {
+                  "type": "reference",
+                  "value": "state"
+                }
+              ]
+            }
           ]
         }
       ],
-
       "state": {
-        "defaultValue": { "type": "reference", "value": "defaultState" },
+        "defaultValue": {
+          "type": "reference",
+          "value": "defaultState"
+        },
         "updateFunctions": [
-          { "name": "handleCurrentChange", "transformation": "getValueFromEvent" },
-          { "name": "updateClick", "transformation": "addTodo" }
+          {
+            "name": "handleCurrentChange",
+            "transformation": "getValueFromEvent"
+          },
+          {
+            "name": "updateClick",
+            "transformation": "addTodo"
+          }
         ]
       },
-
       "computed": [
         {
           "name": "list",
           "operation": "get",
           "arguments": [
-            { "type": "reference", "value": "listKey" },
-            { "type": "reference", "value": "state" }
+            {
+              "type": "reference",
+              "value": "listKey"
+            },
+            {
+              "type": "reference",
+              "value": "state"
+            }
           ]
         },
         {
           "name": "value",
           "operation": "get",
           "arguments": [
-            { "type": "reference", "value": "currentKey" },
-            { "type": "reference", "value": "state" }
+            {
+              "type": "reference",
+              "value": "currentKey"
+            },
+            {
+              "type": "reference",
+              "value": "state"
+            }
           ]
         }
       ],
-
       "effects": [
         {
           "type": "log",
@@ -127,29 +260,52 @@
           "handler": "noop"
         }
       ],
-
       "setContexts": [
         {
           "context": "Theme",
           "value": "theme"
         }
       ],
-
       "children": [
         {
           "type": "staticNode",
           "element": "input",
           "props": [
-            { "name": "onChange", "value": { "type": "reference", "value": "handleCurrentChange" } },
-            { "name": "value", "value": { "type": "reference", "value": "value" } }
+            {
+              "name": "onChange",
+              "value": {
+                "type": "reference",
+                "value": "handleCurrentChange"
+              }
+            },
+            {
+              "name": "value",
+              "value": {
+                "type": "reference",
+                "value": "value"
+              }
+            }
           ],
           "children": []
         },
         {
           "type": "staticNode",
           "element": "button",
-          "props": [{ "name": "onClick", "value": { "type": "reference", "value": "updateClick" } }],
-          "children": [{ "type": "reference", "value": "submitLabel" }]
+          "props": [
+            {
+              "name": "onClick",
+              "value": {
+                "type": "reference",
+                "value": "updateClick"
+              }
+            }
+          ],
+          "children": [
+            {
+              "type": "reference",
+              "value": "submitLabel"
+            }
+          ]
         },
         {
           "type": "staticNode",
@@ -257,7 +413,10 @@
           "props": [
             {
               "name": "style",
-              "value": { "type": "reference", "value": "style" }
+              "value": {
+                "type": "reference",
+                "value": "style"
+              }
             }
           ],
           "children": [
@@ -278,12 +437,30 @@
       "name": "Checkmark",
       "props": [],
       "literals": [
-        { "name": "width", "value": 20 },
-        { "name": "height", "value": 20 },
-        { "name": "path", "value": "M0,5 L0,5 L5,10 L10,0 Z" },
-        { "name": "noneFill", "value": "none" },
-        { "name": "strokeWidth", "value": "1px" },
-        { "name": "stroke", "value": "black" }
+        {
+          "name": "width",
+          "value": 20
+        },
+        {
+          "name": "height",
+          "value": 20
+        },
+        {
+          "name": "path",
+          "value": "M0,5 L0,5 L5,10 L10,0 Z"
+        },
+        {
+          "name": "noneFill",
+          "value": "none"
+        },
+        {
+          "name": "strokeWidth",
+          "value": "1px"
+        },
+        {
+          "name": "stroke",
+          "value": "black"
+        }
       ],
       "getContexts": [],
       "functions": [],
@@ -297,11 +474,17 @@
           "props": [
             {
               "name": "width",
-              "value": { "type": "reference", "value": "width" }
+              "value": {
+                "type": "reference",
+                "value": "width"
+              }
             },
             {
               "name": "height",
-              "value": { "type": "reference", "value": "height" }
+              "value": {
+                "type": "reference",
+                "value": "height"
+              }
             }
           ],
           "children": [
