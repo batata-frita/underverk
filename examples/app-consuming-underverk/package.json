@@ -1,5 +1,5 @@
 {
-  "name": "@underverk/ui",
+  "name": "app-consuming-underverk",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
