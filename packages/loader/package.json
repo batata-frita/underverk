@@ -1,6 +1,6 @@
 {
-  "name": "loader",
-  "version": "0.1.0",
+  "name": "@underverk/loader",
+  "version": "1.0.0",
   "license": "MIT",
   "author": "Paulo Ragonha",
   "main": "dist/index.js",
@@ -16,6 +16,9 @@
     "lint": "tsdx lint"
   },
   "peerDependencies": {},
+  "dependencies": {
+    "@underverk/compiler": "1.0.0"
+  },
   "devDependencies": {
     "@types/jest": "^24.0.23",
     "husky": "^3.1.0",

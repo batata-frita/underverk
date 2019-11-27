@@ -9,6 +9,7 @@
     "@types/node": "12.12.12",
     "@types/react": "16.9.12",
     "@types/react-dom": "16.9.4",
+    "@underverk/loader": "1.0.0",
     "@underverk/compiler": "1.0.0",
     "@underverk/prelude": "1.0.0",
     "d3": "^5.14.2",
