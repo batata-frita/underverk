@@ -104,6 +104,7 @@ export interface Context {
 
 export interface Project {
   name: string
+  root: string
   components: Component[]
   contexts: Context[]
 }

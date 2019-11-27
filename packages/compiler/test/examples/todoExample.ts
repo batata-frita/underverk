@@ -352,8 +352,11 @@ export const Theme: Context = {
   },
 }
 
-export const project: Project = {
+const project: Project = {
   name: 'Todo',
+  root: 'App',
   components: [App, TodoItem, Checkmark],
   contexts: [Theme],
 }
+
+export default project

@@ -1,5 +1,5 @@
-import { compileComponent, generate, compileContext } from '../src'
-import { App, TodoItem, Checkmark, Theme } from './examples/todoExample'
+import { compileComponent, generate, generateProgram, compileContext } from '../src'
+import Project, { App, TodoItem, Checkmark, Theme } from './examples/todoExample'
 import { Button } from './examples/staticExample'
 
 describe('statefulExample', () => {
@@ -12,6 +12,7 @@ describe('statefulExample', () => {
     expect(generate(compileComponent(TodoItem))).toMatchSnapshot()
     expect(generate(compileComponent(Checkmark))).toMatchSnapshot()
     expect(generate(compileContext(Theme))).toMatchSnapshot()
+    expect(generateProgram(Project)).toMatchSnapshot()
   })
 })
 

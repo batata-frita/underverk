@@ -33,6 +33,7 @@ export const Button: Component = {
 
 export const project: Project = {
   name: 'My components',
+  root: 'Button',
   components: [Button],
   contexts: [],
 }
