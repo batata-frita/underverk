@@ -53,6 +53,8 @@ export const useCallback = React.useCallback
 
 export const useContext = React.useContext
 
+export const createContext = React.createContext
+
 export const log = (item: any, callback: () => void) => {
   console.log(item)
   callback()

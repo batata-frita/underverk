@@ -1,10 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import App from './App'
 /* eslint-disable import/no-webpack-loader-syntax */
-import testProgram from '-!@underverk/loader!./testProgram.underverk.js'
+import App from './testProgram.underverk.json'
 
-console.log('🧱', testProgram)
+// console.log('🧱', testProgram)
 
 ReactDOM.render(<App />, document.getElementById('root'))

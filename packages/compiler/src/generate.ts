@@ -16,6 +16,7 @@ const imports = [
   'useState',
   'useCallback',
   'useContext',
+  'createContext',
   'log',
   'noop',
 ]
