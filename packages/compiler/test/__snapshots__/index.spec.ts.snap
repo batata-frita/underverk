@@ -1143,7 +1143,7 @@ exports[`statefulExample generates 4`] = `
 
 exports[`statefulExample generates 5`] = `
 "import React from \\"react\\";
-import { compose, when, get, set, objectOf, append, constant, dynamicNode, useEffect, useState, useCallback, useContext, log, noop } from \\"@underverk/prelude\\";
+import { compose, when, get, set, objectOf, append, constant, dynamicNode, useEffect, useState, useCallback, useContext, createContext, log, noop } from \\"@underverk/prelude\\";
 const Theme = createContext({
   \\"textColor\\": \\"green\\"
 });
