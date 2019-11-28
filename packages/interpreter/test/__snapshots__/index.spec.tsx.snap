@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`staticExample interprets 1`] = `<div />`;
+
+exports[`staticExample interprets 2`] = `<svg />`;
