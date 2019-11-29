@@ -3,6 +3,8 @@ import * as R from 'ramda'
 
 export const compose = R.compose
 
+export const concat = R.concat
+
 export const when = (condition: boolean, then: any, otherwise: any) => (condition ? then : otherwise)
 
 export const get = R.curry((key, object) => object[key])

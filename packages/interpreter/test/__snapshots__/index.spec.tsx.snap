@@ -1,5 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`staticExample interprets 1`] = `<div />`;
+exports[`staticExample interprets 1`] = `
+<div>
+  HelloWorld
+</div>
+`;
 
-exports[`staticExample interprets 2`] = `<svg />`;
+exports[`staticExample interprets 2`] = `
+<svg
+  height={20}
+  width={20}
+>
+  <path
+    d="M0,5 L0,5 L5,10 L10,0 Z"
+    fill="none"
+    stroke="black"
+    strokeWidth="1px"
+  />
+</svg>
+`;
+
+exports[`staticExample interprets 3`] = `
+<li
+  style={
+    Object {
+      "color": undefined,
+    }
+  }
+>
+  <span>
+    later
+  </span>
+</li>
+`;
