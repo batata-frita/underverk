@@ -10,6 +10,7 @@ import {
   Expression,
   Computed,
   Context,
+  Effect,
 } from './types'
 import { API } from '@underverk/prelude'
 
@@ -52,12 +53,20 @@ export const interpretComponent = <T extends unknown>(componentAst: Component, r
       ...computeds,
     }
 
+    componentAst.effects.forEach(interpretEffect(finalReferences))
+
     return interpretChildren(componentAst.children, finalReferences)
   }
 
   Result.displayName = componentAst.name
 
   return Result
+}
+
+const interpretEffect = (references: { [key: string]: any }) => (effectAst: Effect): void => {
+  references.useEffect(() => {
+    references[effectAst.type](references[effectAst.dependency], references[effectAst.handler])
+  }, [references[effectAst.dependency]])
 }
 
 const interpretComputeds = (computedsAst: Computed[], references: { [key: string]: any }) =>

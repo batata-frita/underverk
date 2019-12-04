@@ -4,6 +4,10 @@ import * as underverk from '@underverk/prelude'
 import { interpretComponent, interpretContext } from '../src'
 import { Theme, TodoItem, Checkmark } from './examples/todoExample'
 import { Button } from './examples/staticExample'
+import { EffectThing } from './examples/effectExample'
+
+import { render } from '@testing-library/react'
+import '@testing-library/jest-dom/extend-expect'
 
 type ButtonProps = {
   greeting: string
@@ -28,5 +32,18 @@ describe('staticExample', () => {
         )
         .toJSON(),
     ).toMatchSnapshot()
+  })
+})
+
+describe('effects', () => {
+  it('triggers the effect', () => {
+    const logSpy = jest.fn()
+    const EffectInterpreted = interpretComponent(EffectThing, { ...underverk, log: logSpy })
+
+    render(<EffectInterpreted />)
+
+    expect(logSpy).toBeCalledTimes(1)
+    expect(logSpy.mock.calls[0][0]).toEqual('mars')
+    expect(logSpy.mock.calls[0][1]).toBe(underverk.noop)
   })
 })
