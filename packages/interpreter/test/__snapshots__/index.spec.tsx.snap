@@ -1,8 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`staticExample interprets 1`] = `
-<div>
-  HelloWorld
+<div
+  style={
+    Object {
+      "color": undefined,
+    }
+  }
+>
+  HelloMars
 </div>
 `;
 
@@ -24,7 +30,7 @@ exports[`staticExample interprets 3`] = `
 <li
   style={
     Object {
-      "color": undefined,
+      "color": "rebeccapurple",
     }
   }
 >

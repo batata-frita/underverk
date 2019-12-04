@@ -26,7 +26,7 @@ interface References extends API {
   [key: string]: any
 }
 
-export const interpretComponent = (componentAst: Component, references: References): FC => {
+export const interpretComponent = <T extends unknown>(componentAst: Component, references: References): FC<T> => {
   const Result = (outerProps: {}) => {
     const props = interpretProps(componentAst.props, outerProps)
     const literals = interpretLiterals(componentAst.literals)
@@ -102,8 +102,10 @@ export const interpretComposition = (
   firstArg: any,
 ) => {
   const compositionFunctions = compositionAst.map(expression => interpretExpression(expression, references))
-  return compositionFunctions
-    .reduce((resultFn, fn) => x => fn(resultFn(x)), (x) => x)(firstArg)
+  return compositionFunctions.reduce(
+    (resultFn, fn) => x => fn(resultFn(x)),
+    x => x,
+  )(firstArg)
 }
 
 export const interpretExpression = (expression: Expression, references: { [key: string]: any }): ((x: any) => any) => {
@@ -126,10 +128,7 @@ export const interpretProps = (propsAst: Argument[], props: { [key: string]: any
 export const interpretLiterals = (literalsAst: Literal[]): {} =>
   literalsAst.reduce((result, literal) => ({ ...result, [literal.name]: literal.value }), {})
 
-export const interpretContextGetters = (
-  contextGettersAst: ContextGetter[],
-  references: References,
-): {} =>
+export const interpretContextGetters = (contextGettersAst: ContextGetter[], references: References): {} =>
   contextGettersAst.reduce(
     (result, contextGetter) => ({
       ...result,
