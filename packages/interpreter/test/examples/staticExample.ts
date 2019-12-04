@@ -2,10 +2,14 @@ import { Project, Component } from '../../src/types'
 
 export const Button: Component = {
   name: 'Button',
-  props: [{ name: 'onClick' }],
+  props: [
+    { name: 'onClick' },
+    { name: 'thing' },
+    { name: 'greeting' },
+    { name: 'textColor' }
+  ],
   literals: [
-    { name: 'hello', value: 'Hello' },
-    { name: 'world', value: 'World' },
+    { name: 'colorKey', value: 'color' },
   ],
   getContexts: [],
   functions: [],
@@ -14,8 +18,22 @@ export const Button: Component = {
       name: 'label',
       operation: 'concat',
       arguments: [
-        { type: 'reference', value: 'hello' },
-        { type: 'reference', value: 'world' },
+        { type: 'reference', value: 'greeting' },
+        { type: 'reference', value: 'thing' },
+      ],
+    },
+    {
+      name: 'style',
+      operation: 'objectOf',
+      arguments: [
+        {
+          type: 'reference',
+          value: 'colorKey',
+        },
+        {
+          type: 'reference',
+          value: 'textColor',
+        },
       ],
     },
   ],
@@ -25,7 +43,15 @@ export const Button: Component = {
     {
       type: 'staticNode',
       element: 'div',
-      props: [],
+      props: [
+        {
+          name: 'style',
+          value: {
+            type: 'reference',
+            value: 'style'
+          }
+        }
+      ],
       children: [{ type: 'reference', value: 'label' }],
     },
   ],

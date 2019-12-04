@@ -16,6 +16,7 @@
   },
   "peerDependencies": {},
   "devDependencies": {
+    "autoprops": "^0.7.0",
     "@types/jest": "^24.0.23",
     "@types/react-test-renderer": "^16.9.1",
     "husky": "^3.1.0",

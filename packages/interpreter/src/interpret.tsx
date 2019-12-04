@@ -90,7 +90,7 @@ export const interpretFunctions = (
 
         const arrayArgs = Array.of(args)
 
-        return interpretComposition(functionAst.composition, argReferences, arrayArgs[0])
+        return interpretComposition(functionAst.composition, { ...result, ...argReferences }, arrayArgs[0])
       },
     }),
     {},
