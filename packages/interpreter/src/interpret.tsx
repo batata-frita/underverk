@@ -1,4 +1,4 @@
-import React, { createContext, FC, ContextType } from 'react'
+import React, { createContext, FC, Context as ReactContext } from 'react'
 import {
   Component,
   Function,
@@ -11,8 +11,7 @@ import {
   Computed,
   Context,
 } from './types'
-import { compose } from 'ramda'
-import * as underverk from '@underverk/prelude'
+import { API } from '@underverk/prelude'
 
 let availableComponents: { [key: string]: FC } = {
   div: (props: {}) => <div {...props} />,
@@ -21,15 +20,19 @@ let availableComponents: { [key: string]: FC } = {
   svg: (props: {}) => <svg {...props} />,
 }
 
-export const interpretContext = (themeAst: Context): ContextType<any> => createContext(themeAst.defaultValue)
+export const interpretContext = (themeAst: Context): ReactContext<any> => createContext(themeAst.defaultValue)
 
-export const interpretComponent = (componentAst: Component, contexts: { [key: string]: ContextType<any> }): FC => {
+interface References extends API {
+  [key: string]: any
+}
+
+export const interpretComponent = (componentAst: Component, references: References): FC => {
   const Result = (outerProps: {}) => {
     const props = interpretProps(componentAst.props, outerProps)
     const literals = interpretLiterals(componentAst.literals)
-    const contextGetters = interpretContextGetters(componentAst.getContexts, contexts)
+    const contextGetters = interpretContextGetters(componentAst.getContexts, references)
     const initialReferences: { [key: string]: any } = {
-      ...underverk,
+      ...references,
       ...props,
       ...literals,
       ...contextGetters,
@@ -44,12 +47,12 @@ export const interpretComponent = (componentAst: Component, contexts: { [key: st
 
     const computeds = interpretComputeds(componentAst.computed, intermediateReferences)
 
-    const references: { [key: string]: any } = {
+    const finalReferences: { [key: string]: any } = {
       ...intermediateReferences,
       ...computeds,
     }
 
-    return interpretChildren(componentAst.children, references)
+    return interpretChildren(componentAst.children, finalReferences)
   }
 
   Result.displayName = componentAst.name
@@ -61,7 +64,7 @@ const interpretComputeds = (computedsAst: Computed[], references: { [key: string
   computedsAst.reduce(
     (result, computed) => ({
       ...result,
-      [computed.name]: interpretOperation(computed.operation, computed.arguments, references),
+      [computed.name]: interpretOperation(computed.operation, computed.arguments, { ...result, ...references }),
     }),
     {},
   )
@@ -99,14 +102,14 @@ export const interpretComposition = (
   firstArg: any,
 ) => {
   const compositionFunctions = compositionAst.map(expression => interpretExpression(expression, references))
-  // @ts-ignore
-  return compose(...compositionFunctions)(firstArg)
+  return compositionFunctions
+    .reduce((resultFn, fn) => x => fn(resultFn(x)), (x) => x)(firstArg)
 }
 
-export const interpretExpression = (expression: Expression, references: { [key: string]: any }): Function => {
+export const interpretExpression = (expression: Expression, references: { [key: string]: any }): ((x: any) => any) => {
   switch (expression.type) {
     case 'reference':
-      return references[expression.value] as Function
+      return references[expression.value]
 
     case 'operation':
       return interpretOperation(expression.name, expression.arguments, references)
@@ -125,12 +128,12 @@ export const interpretLiterals = (literalsAst: Literal[]): {} =>
 
 export const interpretContextGetters = (
   contextGettersAst: ContextGetter[],
-  contexts: { [key: string]: ContextType<any> },
+  references: References,
 ): {} =>
   contextGettersAst.reduce(
     (result, contextGetter) => ({
       ...result,
-      [contextGetter.name]: contexts[contextGetter.name],
+      [contextGetter.name]: references.useContext(references[contextGetter.name] as ReactContext<any>),
     }),
     {},
   )

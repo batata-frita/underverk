@@ -62,4 +62,23 @@ export const log = (item: any, callback: () => void) => {
   callback()
 }
 
-export const noop = () => {}
+export const noop = () => { }
+
+export interface API {
+  compose: typeof compose
+  concat: typeof concat
+  when: typeof when
+  get: typeof get
+  set: typeof set
+  objectOf: typeof objectOf
+  append: typeof append
+  constant: typeof constant
+  dynamicNode: typeof dynamicNode
+  useEffect: typeof useEffect
+  useState: typeof useState
+  useCallback: typeof useCallback
+  useContext: typeof useContext
+  createContext: typeof createContext
+  log: typeof log
+  noop: typeof noop
+}

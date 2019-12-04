@@ -26,6 +26,7 @@
     "typescript": "^3.7.2"
   },
   "dependencies": {
+    "@underverk/prelude": "^1.0.0",
     "@babel/generator": "^7.7.4",
     "@babel/template": "^7.7.4",
     "@babel/types": "^7.7.4"
